@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arsenal FC - Victoria Concordia Crescit</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        arsenalRed: '#DB0007',         /* 메인 아스날 클래식 레드 */
+                        arsenalRedDeep: '#8A0004',     /* 중후한 깊이감의 딥 레드 */
+                        arsenalRedDarker: '#380001',   /* 배경을 탄탄하게 잡아주는 버건디 블랙 */
+                        arsenalDark: '#1C0002',        /* 극저도 어두운 레드 블랙 */
+                        arsenalWhite: '#FFFFFF',
+                        arsenalGold: '#E1A731',        /* 황금빛 트로피 골드 */
+                        arsenalGoldLight: '#FFE082',
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'Georgia', 'serif'],
+                        sans: ['Montserrat', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Cinzel for majestic headings & Montserrat for modern body copy -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for elegant iconography -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .gold-glow {
+            text-shadow: 0 0 15px rgba(225, 167, 49, 0.7);
+        }
+        .red-glow {
+            box-shadow: 0 0 30px rgba(219, 0, 7, 0.6);
+        }
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #FFE082 0%, #E1A731 50%, #B37D14 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-gradient-white {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F1F5F9 60%, #CBD5E1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-panel {
+            background: rgba(56, 0, 1, 0.75);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(225, 167, 49, 0.25);
+        }
+        .glass-panel-gold {
+            background: rgba(225, 167, 49, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(225, 167, 49, 0.35);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1C0002;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #DB0007;
+            border-radius: 4px;
+            border: 1px solid #E1A731;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E1A731;
+        }
+    </style>
+</head>
+<body class="bg-arsenalRedDarker text-slate-100 font-sans overflow-x-hidden">
+
+    <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-arsenalRedDarker/90 backdrop-blur-md border-b border-arsenalGold/20" id="main-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#hero" class="flex items-center space-x-3 group">
+                <div class="relative w-11 h-12 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg" alt="Arsenal FC Crest" class="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(225,167,49,0.5)]" onerror="this.onerror=null; this.src='https://placehold.co/44x48/db0007/ffffff?text=AFC';">
+                </div>
+                <span class="font-serif font-black text-xl tracking-widest text-gradient-gold group-hover:opacity-90 transition-opacity">ARSENAL FC</span>
+            </a>
+
+            <!-- Menu Links Matching the 5 Storytelling Steps -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#hero" class="text-xs uppercase tracking-widest hover:text-arsenalGold transition-colors font-bold text-slate-100">Hero</a>
+                <a href="#origin" class="text-xs uppercase tracking-widest hover:text-arsenalGold transition-colors font-bold text-slate-100">Origin</a>
+                <a href="#legacy" class="text-xs uppercase tracking-widest hover:text-arsenalGold transition-colors font-bold text-slate-100">Legacy</a>
+                <a href="#rivalry" class="text-xs uppercase tracking-widest hover:text-arsenalGold transition-colors font-bold text-slate-100">Rivalry</a>
+                <a href="#future" class="text-xs uppercase tracking-widest hover:text-arsenalGold transition-colors font-bold text-slate-100">Future</a>
+                <a href="#future" class="px-5 py-2.5 bg-gradient-to-r from-arsenalGold to-amber-500 text-xs uppercase tracking-widest text-arsenalRedDarker hover:scale-105 active:scale-95 font-black rounded-lg transition-all shadow-md">Join the Club</a>
+            </div>
+
+            <!-- Mobile Menu Trigger -->
+            <button class="md:hidden text-slate-100 hover:text-arsenalGold transition-colors" id="menu-btn" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Container -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-0 w-full bg-arsenalDark/95 border-b border-arsenalGold/20 py-6 px-4 flex flex-col space-y-4">
+            <a href="#hero" class="mobile-link text-sm uppercase tracking-widest text-slate-200 hover:text-arsenalGold">Hero</a>
+            <a href="#origin" class="mobile-link text-sm uppercase tracking-widest text-slate-200 hover:text-arsenalGold">Origin</a>
+            <a href="#legacy" class="mobile-link text-sm uppercase tracking-widest text-slate-200 hover:text-arsenalGold">Legacy</a>
+            <a href="#rivalry" class="mobile-link text-sm uppercase tracking-widest text-slate-200 hover:text-arsenalGold">Rivalry</a>
+            <a href="#future" class="mobile-link text-sm uppercase tracking-widest text-slate-200 hover:text-arsenalGold">Future</a>
+            <a href="#future" class="mobile-link px-4 py-3 bg-gradient-to-r from-arsenalGold to-amber-500 text-xs uppercase tracking-widest text-arsenalRedDarker text-center font-extrabold rounded-lg hover:opacity-90 transition-all shadow-md">Join the Club</a>
+        </div>
+    </nav>
+
+    <header id="hero" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-gradient-to-b from-arsenalRedDeep via-arsenalRedDarker to-arsenalDark">
+        <div class="absolute inset-0 z-0 opacity-35 pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-arsenalRed filter blur-[140px] animate-pulse"></div>
+            <div class="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] rounded-full bg-arsenalGold filter blur-[160px] opacity-60"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center justify-center py-16">
+            <!-- 2025-26 Premier League Champion badge -->
+            <div class="inline-flex items-center space-x-2 bg-arsenalGold/20 border-2 border-arsenalGold/60 px-5 py-2.5 rounded-full mb-8 animate-bounce shadow-lg backdrop-blur-sm">
+                <i class="fa-solid fa-trophy text-arsenalGold text-base"></i>
+                <span class="text-xs font-black text-arsenalGoldLight uppercase tracking-widest">2025-26 EPL Champions - The Return of the King</span>
+            </div>
+
+            <!-- Latin Club Moto / Catchphrase -->
+            <h1 class="font-serif text-4xl sm:text-6xl md:text-8xl font-black text-gradient-gold tracking-wide leading-tight mb-4 select-none drop-shadow-md">
+                VICTORIA CONCORDIA CRESCIT
+            </h1>
+            <p class="font-sans text-lg sm:text-2xl font-light tracking-[0.25em] text-slate-100 uppercase mb-12">
+                "조화 속의 승리" &mdash; Victory Through Harmony
+            </p>
+
+            <!-- Main Interactive Official Arsenal Crest Render -->
+            <div class="relative w-64 h-64 md:w-80 md:h-80 mx-auto mb-12 transform hover:scale-105 transition-transform duration-500 cursor-pointer" id="trophy-interactive">
+                <div class="absolute inset-0 rounded-full border-2 border-dashed border-arsenalGold/40 animate-spin" style="animation-duration: 22s;"></div>
+                <div class="absolute inset-4 rounded-full border border-arsenalGold/30 animate-spin" style="animation-duration: 14s; animation-direction: reverse;"></div>
+                
+                <div class="absolute inset-0 flex items-center justify-center p-12">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg" alt="Arsenal FC Official Crest" class="w-full h-full object-contain drop-shadow-[0_0_40px_rgba(219,0,7,0.75)] filter hover:brightness-110 transition-all duration-300" onerror="this.onerror=null; this.src='https://placehold.co/240x240/db0007/ffffff?text=Arsenal';">
+                </div>
+            </div>
+
+            <!-- Scroll indicator call to action -->
+            <a href="#origin" class="flex flex-col items-center space-y-2 text-slate-200 hover:text-arsenalGold transition-colors" aria-label="Scroll Down">
+                <span class="text-xs uppercase tracking-widest font-bold">The Heritage of the Gunners</span>
+                <i class="fa-solid fa-chevron-down animate-bounce text-sm text-arsenalGold"></i>
+            </a>
+        </div>
+    </header>
+
+    <section id="origin" class="py-24 relative overflow-hidden bg-gradient-to-r from-arsenalRedDarker via-arsenalDark to-arsenalRedDarker border-t border-b border-arsenalGold/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Hand Side Visual Asset: The Dial Square Cannon & Forge -->
+                <div class="lg:col-span-5 relative flex justify-center">
+                    <div class="relative w-80 h-80 md:w-96 md:h-96 glass-panel rounded-3xl overflow-hidden p-8 flex flex-col justify-between border-2 border-arsenalRed/50 shadow-2xl">
+                        <div class="absolute inset-0 bg-gradient-to-br from-arsenalRed/20 to-transparent pointer-events-none"></div>
+                        
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-xs uppercase tracking-widest text-arsenalGold font-black">Est. 1886</span>
+                                <h4 class="font-serif text-xl text-slate-100 font-bold mt-1">Dial Square</h4>
+                            </div>
+                            <div class="text-2xl text-arsenalGold"><i class="fa-solid fa-compass-drafting"></i></div>
+                        </div>
+
+                        <!-- Heavy Industrial Forge Pattern (SVG Cannon silhouette) -->
+                        <div class="my-6 flex justify-center py-6">
+                            <svg class="w-48 h-48 text-slate-200/20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M11,10.11V4H13V10.11A3.5,3.5 0 0,1 15,13.5A3.5,3.5 0 0,1 11,17H9V19H7V17H5V15H7V13.5A3.5,3.5 0 0,1 11,10.11M13,15A1.5,1.5 0 0,0 14.5,13.5A1.5,1.5 0 0,0 13,12A1.5,1.5 0 0,0 11.5,13.5A1.5,1.5 0 0,0 13,15Z" />
+                            </svg>
+                        </div>
+
+                        <div class="border-t border-slate-700/60 pt-4">
+                            <p class="text-xs text-slate-300 italic">"로열 아스날 노동자들이 흘린 땀방울이 지금 포병대(The Gunners)의 위대한 뿌리가 되다."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Hand Side Narrative Storytelling text -->
+                <div class="lg:col-span-7 space-y-6">
+                    <span class="text-xs uppercase tracking-widest text-arsenalGold font-black">The Heritage & Roots</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl font-extrabold text-slate-100">조병창 노동자들의 헤리티지</h2>
+                    <p class="text-slate-200 leading-relaxed font-light">
+                        아스날 FC의 이야기는 화려한 우승 트로피나 거대한 경기장 대신, 1886년 런던 남동부 울리치(Woolwich)의 무기 조병창 노동자들로부터 시작되었습니다. 고된 하루의 끝자락에서 모인 그들의 열정적인 작은 모임, '다이얼 스퀘어(Dial Square)'가 훗날 프리미어 리그를 뒤흔들 거대한 포병대(The Gunners)의 시작점이 될 것이라고는 아무도 예상하지 못했습니다.
+                    </p>
+                    <p class="text-slate-200 leading-relaxed font-light">
+                        군수공장의 포탄과 단단한 쇠붙이, 노동의 숭고한 땀방울에서 전해진 타협 없는 붉은 정체성은 대를 이어 현재의 아스날을 구성하는 가장 뜨겁고 순수한 붉은 정체성이 되어 숨 쉬고 있습니다.
+                    </p>
+
+                    <div class="border-l-4 border-arsenalGold pl-4 py-3 bg-arsenalGold/10 rounded-r-lg">
+                        <p class="font-serif italic text-slate-100">
+                            "그들의 손은 무기를 제조했지만, 가슴은 둥근 축구공을 쫓아 위대한 단결을 꿈꾸었다."
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="legacy" class="py-24 relative overflow-hidden bg-arsenalDark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <span class="text-xs uppercase tracking-widest text-arsenalGold font-black">Unbeaten, Historic, Unrivaled</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-slate-100 mt-2 mb-4">위대한 황금빛 기록실</h2>
+                <p class="text-slate-300 text-sm">프리미어 리그 유일무이 골든 트로피의 대기록부터, 구단 역사 통산 2,000승 달성까지의 위엄을 느껴보세요.</p>
+                <div class="w-20 h-1 bg-gradient-to-r from-arsenalRed to-arsenalGold mx-auto mt-4"></div>
+            </div>
+
+            <!-- Stats Counters Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+                <!-- Stat 1 -->
+                <div class="glass-panel p-6 rounded-2xl text-center border-t-4 border-t-arsenalGold shadow-lg">
+                    <div class="text-3xl text-arsenalGold mb-2"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="text-4xl md:text-5xl font-extrabold text-slate-100 font-sans tracking-tight mb-2 count-up" data-target="49">0</div>
+                    <p class="text-xs uppercase tracking-widest text-slate-300 font-bold">무패 우승 경기 수 (Invincibles)</p>
+                </div>
+                <!-- Stat 2 -->
+                <div class="glass-panel p-6 rounded-2xl text-center border-t-4 border-t-arsenalGold shadow-lg">
+                    <div class="text-3xl text-arsenalGold mb-2"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="text-4xl md:text-5xl font-extrabold text-slate-100 font-sans tracking-tight mb-2 count-up" data-target="14">0</div>
+                    <p class="text-xs uppercase tracking-widest text-slate-300 font-bold">FA 컵 최다 우승</p>
+                </div>
+                <!-- Stat 3 -->
+                <div class="glass-panel p-6 rounded-2xl text-center border-t-4 border-t-arsenalGold shadow-lg">
+                    <div class="text-3xl text-arsenalGold mb-2"><i class="fa-solid fa-crown"></i></div>
+                    <div class="text-4xl md:text-5xl font-extrabold text-slate-100 font-sans tracking-tight mb-2 count-up" data-target="2000">0</div>
+                    <p class="text-xs uppercase tracking-widest text-slate-300 font-bold">역사상 통산 승리 수 (1부)</p>
+                </div>
+                <!-- Stat 4 -->
+                <div class="glass-panel p-6 rounded-2xl text-center border-t-4 border-t-arsenalGold shadow-lg">
+                    <div class="text-3xl text-arsenalGold mb-2"><i class="fa-solid fa-star"></i></div>
+                    <div class="text-4xl md:text-5xl font-extrabold text-slate-100 font-sans tracking-tight mb-2 count-up" data-target="13">0</div>
+                    <p class="text-xs uppercase tracking-widest text-slate-300 font-bold">리그 우승 통산 횟수</p>
+                </div>
+            </div>
+
+            <!-- Timeline Tabs for Legacy Moments -->
+            <div class="glass-panel p-6 md:p-12 rounded-3xl border-2 border-arsenalGold/30 shadow-2xl">
+                <div class="flex flex-wrap justify-center gap-4 mb-10" id="timeline-tabs">
+                    <button class="tab-btn px-6 py-3 rounded-lg text-xs uppercase tracking-widest font-black bg-arsenalGold text-arsenalRedDarker transition-all shadow-md" data-target="timeline-1886">1886 - Dial Square</button>
+                    <button class="tab-btn px-6 py-3 rounded-lg text-xs uppercase tracking-widest font-black bg-arsenalRedDeep/40 text-slate-200 border border-arsenalGold/20 hover:bg-arsenalRedDeep transition-all" data-target="timeline-1913">1913 - Highbury</button>
+                    <button class="tab-btn px-6 py-3 rounded-lg text-xs uppercase tracking-widest font-black bg-arsenalRedDeep/40 text-slate-200 border border-arsenalGold/20 hover:bg-arsenalRedDeep transition-all" data-target="timeline-2004">2004 - Invincibles</button>
+                    <button class="tab-btn px-6 py-3 rounded-lg text-xs uppercase tracking-widest font-black bg-arsenalRedDeep/40 text-slate-200 border border-arsenalGold/20 hover:bg-arsenalRedDeep transition-all" data-target="timeline-2026">2026 - Modern Era</button>
+                </div>
+
+                <div id="timeline-contents" class="relative">
+                    <!-- Tab Content 1 (1886) -->
+                    <div id="timeline-1886" class="tab-content transition-opacity duration-300">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                            <div class="space-y-4">
+                                <span class="text-xs uppercase tracking-widest text-arsenalGold font-bold">The Birth of Legend</span>
+                                <h3 class="font-serif text-2xl md:text-3xl font-extrabold text-slate-100">조병창 노동자들의 첫 태동</h3>
+                                <p class="text-slate-200 text-sm leading-relaxed">
+                                    런던 남동부 울리치 Royal Arsenal 노동자들 15명이 힘을 합쳐 최초의 클럽 '다이얼 스퀘어'를 결성했습니다. 첫 경기였던 이스턴 원더러스와의 대결에서 6대 0의 대승을 장식하며 전설의 신호탄을 쏘아 올렸습니다.
+                                </p>
+                            </div>
+                            <div class="p-6 bg-arsenalRedDarker/80 rounded-2xl border border-arsenalGold/20">
+                                <h4 class="text-xs font-black text-arsenalGold uppercase mb-3">Historical Record File</h4>
+                                <ul class="space-y-2 text-xs text-slate-200">
+                                    <li><strong>구단 설립 명칭:</strong> Dial Square FC</li>
+                                    <li><strong>최초 경기장:</strong> Plumstead Common</li>
+                                    <li><strong>기념비적 유산:</strong> 훗날 Royal Arsenal, Woolwich Arsenal을 거쳐 현재의 Arsenal로 정착</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content 2 (1913 - Hidden by default) -->
+                    <div id="timeline-1913" class="tab-content hidden opacity-0 transition-opacity duration-300">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                            <div class="space-y-4">
+                                <span class="text-xs uppercase tracking-widest text-arsenalGold font-bold">New Fortress</span>
+                                <h3 class="font-serif text-2xl md:text-3xl font-extrabold text-slate-100">하이버리 스타디움의 개장</h3>
+                                <p class="text-slate-200 text-sm leading-relaxed">
+                                    남부 울리치에서 북런던 하이버리(Highbury)로의 대대적인 연고지 이전을 단행했습니다. 하이버리는 우아한 아트 데코 스타일의 웅장한 경기장으로 발전하며, 북런던 축구의 찬란한 중심축으로 군림하게 되었습니다.
+                                </p>
+                            </div>
+                            <div class="p-6 bg-arsenalRedDarker/80 rounded-2xl border border-arsenalGold/20">
+                                <h4 class="text-xs font-black text-arsenalGold uppercase mb-3">Highbury Milestones</h4>
+                                <ul class="space-y-2 text-xs text-slate-200">
+                                    <li><strong>역사적 명칭:</strong> Arsenal Stadium (Highbury)</li>
+                                    <li><strong>아이콘 설계:</strong> 아치볼드 리치 (Archibald Leitch)</li>
+                                    <li><strong>수많은 영광:</strong> 93년간 아스날 역사의 홈구장으로서 리그 우승 전설들을 탄생시킴</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content 3 (2004 - Hidden by default) -->
+                    <div id="timeline-2004" class="tab-content hidden opacity-0 transition-opacity duration-300">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                            <div class="space-y-4">
+                                <span class="text-xs uppercase tracking-widest text-arsenalGold font-bold">The Golden Record</span>
+                                <h3 class="font-serif text-2xl md:text-3xl font-extrabold text-slate-100">49경기 무패, 전무후무한 황금 트로피</h3>
+                                <p class="text-slate-200 text-sm leading-relaxed">
+                                    2003-04 시즌, 프리미어 리그 역사상 그 누구도 도달하지 못한 대기록이 달성됩니다. 26승 12무, 패배를 잊은 채 완벽한 축구(The Invincibles)를 선보이며 유일무이한 '황금빛 엠블럼 트로피'를 영원히 손에 쥐었습니다.
+                                </p>
+                            </div>
+                            <div class="p-6 bg-arsenalRedDarker/80 rounded-2xl border border-arsenalGold/20">
+                                <h4 class="text-xs font-black text-arsenalGold uppercase mb-3">The Invincibles Squad</h4>
+                                <ul class="space-y-2 text-xs text-slate-200">
+                                    <li><strong>총감독:</strong> 아르센 벵거 (Arsène Wenger)</li>
+                                    <li><strong>수훈 선수:</strong> 티에리 앙리, 데니스 베르캄프, 파트리크 비에라</li>
+                                    <li><strong>기록:</strong> 49경기 연속 무패 및 리그 유일의 무패 우승 달성</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content 4 (2026 - Hidden by default) -->
+                    <div id="timeline-2026" class="tab-content hidden opacity-0 transition-opacity duration-300">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                            <div class="space-y-4">
+                                <span class="text-xs uppercase tracking-widest text-arsenalGold font-bold">Modern Era Dominance</span>
+                                <h3 class="font-serif text-2xl md:text-3xl font-extrabold text-slate-100">2025-26 시즌, 잉글랜드 챔피언의 완벽한 복귀</h3>
+                                <p class="text-slate-200 text-sm leading-relaxed">
+                                    젊고 에너지 넘치는 전술과 하나로 조화된 군단으로 무장한 미켈 아르테타 체제의 아스날은 마침내 격렬했던 2025-26 잉글랜드 프리미어리그 왕좌를 거머쥐었습니다. 역사의 한 페이지에 머무는 아스날이 아니라, 진정한 왕의 귀환을 알리는 순간입니다.
+                                </p>
+                            </div>
+                            <div class="p-6 bg-arsenalRedDarker/80 rounded-2xl border border-arsenalGold/20">
+                                <h4 class="text-xs font-black text-arsenalGold uppercase mb-3">Champions Blueprint</h4>
+                                <ul class="space-y-2 text-xs text-slate-200">
+                                    <li><strong>우승 성과:</strong> 25-26 EPL 챔피언 & 최저 실점 달성</li>
+                                    <li><strong>핵심 아이덴티티:</strong> 조화(Concordia)와 무서운 조직력의 극치</li>
+                                    <li><strong>미래 포부:</strong> 다가올 UEFA 챔피언스 리그의 연속 제패 조준</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="rivalry" class="py-24 relative overflow-hidden bg-gradient-to-b from-arsenalDark to-arsenalRedDarker border-t border-b border-arsenalGold/10">
+        <div class="absolute inset-0 pointer-events-none opacity-20">
+            <!-- Stadium Noise Background Waves Graphic -->
+            <svg class="w-full h-full text-arsenalRed" viewBox="0 0 1440 320" fill="currentColor">
+                <path d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,117.3C960,107,1056,149,1152,176C1248,203,1344,213,1392,218.7L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Hand Narrative of the North London Derby -->
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="text-xs uppercase tracking-widest text-arsenalGold font-black">The Fierce Rivalry</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl font-extrabold text-slate-100">양보 없는 북런던 더비</h2>
+                    <p class="text-slate-200 leading-relaxed font-light">
+                        화이트 하트 레인을 넘어 토트넘 핫스퍼 스타디움까지, 토트넘 홋스퍼와의 '북런던 더비'는 단순한 한 판의 축구 경기가 아닙니다. 이것은 런던 북부의 자존심이자, 수백만 구너(Gooners)가 목놓아 불러야 할 삶의 이유 그 자체입니다.
+                    </p>
+                    <p class="text-slate-200 leading-relaxed font-light">
+                        경기 당일 에미레이트 스타디움을 뜨겁게 달구는 찬가 **"North London Forever"**가 심장을 가득 채울 때, 북런던의 붉은 물결은 결코 타협하지 않는 열정으로 불타오릅니다.
+                    </p>
+                    
+                    <!-- Soundscape Synthesizer Info & Interactive Play Button -->
+                    <div class="glass-panel-gold p-4 rounded-xl flex items-center justify-between">
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-100"><i class="fa-solid fa-volume-high text-arsenalGold mr-2 animate-bounce"></i>Chant Soundscape Generator</h4>
+                            <p class="text-xs text-slate-300 mt-1">구장의 심장박동과 손뼉 소리 리듬을 사운드로 직접 들어보세요.</p>
+                        </div>
+                        <button id="synth-sound-btn" class="px-5 py-2.5 bg-gradient-to-r from-arsenalGold to-amber-500 text-arsenalRedDarker hover:scale-105 rounded-lg text-xs font-black uppercase tracking-wider transition-all shadow-md active:scale-95">
+                            Play Chant Sound
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Hand Interactive Experience: The Fan Noise Meter Game & Sound Generator -->
+                <div class="lg:col-span-6">
+                    <div class="glass-panel p-8 rounded-3xl border-2 border-arsenalGold/30 relative overflow-hidden shadow-2xl">
+                        <!-- Red hot ambiance inside card -->
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-arsenalRed/20 rounded-full filter blur-xl pointer-events-none"></div>
+                        
+                        <div class="text-center mb-6">
+                            <h3 class="font-serif text-xl font-bold text-gradient-gold">Emirates Atmosphere Simulator</h3>
+                            <p class="text-xs text-slate-300 mt-1">"North London Forever!" 응원 버튼을 연속 클릭하여 에미레이츠의 가상의 팬 소음을 극대화하고 경기장 데시벨 신기록을 달성해보세요!</p>
+                        </div>
+
+                        <!-- Decibel Circle Dial -->
+                        <div class="relative w-48 h-48 mx-auto mb-8 flex flex-col items-center justify-center rounded-full border-4 border-slate-700 transition-all duration-300" id="noise-ring">
+                            <div class="absolute inset-2 rounded-full bg-arsenalRedDarker/90 flex flex-col items-center justify-center border border-arsenalGold/20">
+                                <span class="text-xs text-slate-400 uppercase tracking-widest">Decibel</span>
+                                <span class="text-4xl font-extrabold text-slate-100" id="decibel-number">80</span>
+                                <span class="text-[10px] text-slate-300 font-bold uppercase tracking-wider mt-1" id="noise-status">CALM STADIUM</span>
+                            </div>
+                        </div>
+
+                        <!-- Clicker and Visualizer Waveform -->
+                        <div class="space-y-4">
+                            <div class="flex space-x-1 justify-center h-8 items-end mb-4" id="audio-visualizer">
+                                <span class="w-1.5 bg-slate-600 rounded-full h-2 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-600 rounded-full h-3 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-600 rounded-full h-2 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-600 rounded-full h-4 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-600 rounded-full h-5 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-600 rounded-full h-3 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-600 rounded-full h-2 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-600 rounded-full h-4 transition-all duration-150"></span>
+                            </div>
+
+                            <div class="flex justify-center">
+                                <button id="chant-clicker" class="px-8 py-4 bg-gradient-to-r from-arsenalRed to-red-600 hover:from-red-600 hover:to-red-700 text-white font-black uppercase tracking-widest text-xs rounded-xl shadow-lg hover:shadow-red-500/30 transform hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all w-full max-w-sm border border-arsenalGold/30">
+                                    📣 Chant: "North London Forever!"
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="future" class="py-24 relative overflow-hidden bg-gradient-to-b from-arsenalRedDarker to-arsenalDark">
+        <div class="absolute inset-0 pointer-events-none opacity-20">
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-arsenalGold filter blur-[180px]"></div>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-8">
+            <span class="text-xs uppercase tracking-widest text-arsenalGold font-black">Join the Legend, Secure the Era</span>
+            <h2 class="font-serif text-4xl sm:text-6xl font-extrabold text-slate-100">ALWAYS FORWARD</h2>
+            <p class="text-slate-200 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed font-light">
+                우리는 역사에 안주하지 않습니다. 로열 아스날 조병창의 단단한 철공에서 25-26 시즌 우승 트로피까지, 구너들과 함께 끊임없이 앞으로 나아갈 뿐입니다. 오늘 공식 아스날 멤버십에 가입하고 매주 펼쳐지는 챔피언의 전율에 동참하십시오.
+            </p>
+
+            <!-- Membership Portal Form -->
+            <form id="membership-form" class="max-w-md mx-auto mt-8 flex flex-col sm:flex-row gap-2 bg-arsenalRedDarker/80 p-2.5 rounded-2xl border-2 border-arsenalGold/30 backdrop-blur-md shadow-2xl">
+                <input type="email" id="email-input" placeholder="Enter your email address" class="bg-transparent border-0 px-4 py-3 text-sm focus:ring-0 focus:outline-none text-white placeholder-slate-400 flex-grow" required>
+                <button type="submit" class="bg-gradient-to-r from-arsenalGold to-amber-500 hover:from-amber-500 hover:to-amber-600 text-arsenalRedDarker font-black uppercase tracking-widest text-xs px-6 py-4 rounded-xl transition-all shadow-md">
+                    Become a Gunner
+                </button>
+            </form>
+
+            <div id="form-feedback" class="hidden text-xs text-emerald-400 mt-2 font-bold">
+                <i class="fa-solid fa-circle-check mr-1 animate-pulse"></i> 아스날의 가족이 되신 것을 영광으로 생각합니다! 이메일 함을 확인하세요.
+            </div>
+
+            <p class="text-[10px] text-slate-300 tracking-wider font-semibold">By subscribing, you agree to receive official Arsenal updates & ticketing offers.</p>
+        </div>
+    </section>
+
+    <footer class="bg-arsenalDark text-slate-300 border-t border-arsenalGold/20 py-16 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                
+                <!-- Col 1: Brand -->
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 flex items-center justify-center bg-arsenalRed rounded-full border border-arsenalGold/40">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M2,11H5V13H2V11M6,11H14L11,8H6V11M22,12C22,14.5 21,16.5 19,17.5V20H17V18.5C16,19 14.5,19.5 13,19.5V22H11V19.5C9.5,19.5 8,19 7,18.5V21H5V18C3,16.5 2,14.5 2,12H22M15,11H18V13H15V11M19,11H21V13H19V11Z" />
+                            </svg>
+                        </div>
+                        <span class="font-serif font-black text-lg tracking-wider text-gradient-gold">ARSENAL FC</span>
+                    </div>
+                    <p class="text-xs text-slate-300 font-light leading-relaxed">"Victoria Concordia Crescit" - 가슴속 영원히 붉게 고동치는 런던 정통 조화와 단합의 승리 공식.</p>
+                </div>
+
+                <!-- Col 2: Navigation Links -->
+                <div>
+                    <h4 class="text-xs font-black text-slate-100 uppercase tracking-widest mb-4">Navigations</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#hero" class="hover:text-arsenalGold transition-colors">Hero Intro</a></li>
+                        <li><a href="#origin" class="hover:text-arsenalGold transition-colors">The Origin Legacy</a></li>
+                        <li><a href="#legacy" class="hover:text-arsenalGold transition-colors">Golden Trophy Record</a></li>
+                        <li><a href="#rivalry" class="hover:text-arsenalGold transition-colors">North London Rivalry</a></li>
+                        <li><a href="#future" class="hover:text-arsenalGold transition-colors">Future Vision</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Stadium Hours -->
+                <div>
+                    <h4 class="text-xs font-black text-slate-100 uppercase tracking-widest mb-4">Emirates Stadium</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed font-light">
+                        Hornsey Rd, London N7 9AJ<br>
+                        United Kingdom<br>
+                        Stadium Tours: 10:00 AM - 17:00 PM<br>
+                        Match Days: See official schedule
+                    </p>
+                </div>
+
+                <!-- Col 4: Official Fan Support -->
+                <div>
+                    <h4 class="text-xs font-black text-slate-100 uppercase tracking-widest mb-4">Official Channels</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="https://twitter.com/Arsenal" target="_blank" class="w-8 h-8 rounded-full bg-arsenalRedDeep border border-arsenalGold/30 flex items-center justify-center hover:text-arsenalGold hover:border-arsenalGold transition-all" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter text-white"></i></a>
+                        <a href="https://www.instagram.com/arsenal" target="_blank" class="w-8 h-8 rounded-full bg-arsenalRedDeep border border-arsenalGold/30 flex items-center justify-center hover:text-arsenalGold hover:border-arsenalGold transition-all" aria-label="Instagram"><i class="fa-brands fa-instagram text-white"></i></a>
+                        <a href="https://www.youtube.com/user/ArsenalTour" target="_blank" class="w-8 h-8 rounded-full bg-arsenalRedDeep border border-arsenalGold/30 flex items-center justify-center hover:text-arsenalGold hover:border-arsenalGold transition-all" aria-label="YouTube"><i class="fa-brands fa-youtube text-white"></i></a>
+                    </div>
+                    <p class="text-[10px] text-slate-400">This webpage serves as an elegant Arsenal Branding Concept UI/UX representation.</p>
+                </div>
+
+            </div>
+
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400">
+                <p>&copy; 2026 Arsenal FC Branding Concept. Developed for Gooners Worldwide.</p>
+                <p class="mt-4 md:mt-0">Victoria Concordia Crescit &bull; Always Forward</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            /* 1. Sticky Navigation Scroll Effect */
+            const mainNav = document.getElementById('main-nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 80) {
+                    mainNav.classList.add('bg-arsenalDark', 'shadow-2xl', 'border-arsenalGold/30');
+                    mainNav.classList.remove('bg-arsenalRedDarker/90');
+                } else {
+                    mainNav.classList.remove('bg-arsenalDark', 'shadow-2xl', 'border-arsenalGold/30');
+                    mainNav.classList.add('bg-arsenalRedDarker/90');
+                }
+            });
+
+            /* 2. Responsive Mobile Menu Toggle */
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            /* 3. Stat Count-Up Animation with Intersection Observer */
+            const statElements = document.querySelectorAll('.count-up');
+            
+            const animateCount = (el) => {
+                const target = parseInt(el.getAttribute('data-target'), 10);
+                let current = 0;
+                const duration = 2000; // 2 seconds
+                const stepTime = Math.max(Math.floor(duration / target), 15);
+                
+                const timer = setInterval(() => {
+                    current += Math.ceil(target / 100);
+                    if (current >= target) {
+                        el.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        el.textContent = current;
+                    }
+                }, stepTime);
+            };
+
+            const observerOptions = {
+                threshold: 0.1,
+                root: null
+            };
+
+            const statsObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCount(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            statElements.forEach(el => statsObserver.observe(el));
+
+            /* 4. Interactive Timeline Tabs */
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetId = btn.getAttribute('data-target');
+
+                    // Reset buttons
+                    tabButtons.forEach(b => {
+                        b.classList.remove('bg-arsenalGold', 'text-arsenalRedDarker');
+                        b.classList.add('bg-arsenalRedDeep/40', 'text-slate-200', 'border', 'border-arsenalGold/20');
+                    });
+
+                    // Set active button
+                    btn.classList.add('bg-arsenalGold', 'text-arsenalRedDarker');
+                    btn.classList.remove('bg-arsenalRedDeep/40', 'text-slate-200', 'border', 'border-arsenalGold/20');
+
+                    // Switch contents
+                    tabContents.forEach(content => {
+                        content.classList.add('hidden');
+                        content.classList.remove('opacity-100');
+                        content.classList.add('opacity-0');
+                    });
+
+                    const activeContent = document.getElementById(targetId);
+                    activeContent.classList.remove('hidden');
+                    setTimeout(() => {
+                        activeContent.classList.remove('opacity-0');
+                        activeContent.classList.add('opacity-100');
+                    }, 50);
+                });
+            });
+
+            /* 5. Emirates Stadium Fan Decibel Clicker Game & Equalizer Visualizer */
+            const chantClicker = document.getElementById('chant-clicker');
+            const decibelNumber = document.getElementById('decibel-number');
+            const noiseStatus = document.getElementById('noise-status');
+            const noiseRing = document.getElementById('noise-ring');
+            const visualizerBars = document.querySelectorAll('#audio-visualizer span');
+
+            let decibels = 80;
+            let cooldownTimer = null;
+
+            chantClicker.addEventListener('click', () => {
+                // Increase decibels
+                decibels += Math.floor(Math.random() * 5) + 3;
+                if (decibels > 130) decibels = 130; // Max decibels limit (Threshold of pain)
+
+                decibelNumber.textContent = decibels;
+
+                // Dynamic visual updates depending on Decibel Thresholds
+                if (decibels >= 115) {
+                    noiseStatus.textContent = "EMIRATES IN FLAMES 🔥";
+                    noiseStatus.className = "text-[10px] text-yellow-300 font-extrabold uppercase tracking-wider mt-1 animate-pulse";
+                    noiseRing.style.borderColor = "#DB0007";
+                    noiseRing.style.boxShadow = "0 0 30px rgba(219, 0, 7, 0.9)";
+                } else if (decibels >= 100) {
+                    noiseStatus.textContent = "DEAFENING CHANTS 📣";
+                    noiseStatus.className = "text-[10px] text-amber-400 font-bold uppercase tracking-wider mt-1";
+                    noiseRing.style.borderColor = "#E1A731";
+                    noiseRing.style.boxShadow = "0 0 15px rgba(225, 167, 49, 0.6)";
+                } else {
+                    noiseStatus.textContent = "STADIUM IS ROARING";
+                    noiseStatus.className = "text-[10px] text-emerald-400 font-bold uppercase tracking-wider mt-1";
+                }
+
+                // Randomize Visualizer Waves to look highly reactive
+                visualizerBars.forEach(bar => {
+                    const heightValue = Math.floor(Math.random() * 24) + 6;
+                    bar.style.height = `${heightValue}px`;
+                    bar.style.backgroundColor = decibels > 115 ? '#DB0007' : '#E1A731';
+                });
+
+                // Reset cooldown
+                clearTimeout(cooldownTimer);
+                cooldownTimer = setTimeout(() => {
+                    decayDecibels();
+                }, 2000);
+            });
+
+            // Decay the sound naturally if user stops clicking
+            function decayDecibels() {
+                const interval = setInterval(() => {
+                    if (decibels > 80) {
+                        decibels -= 2;
+                        if (decibels < 80) decibels = 80;
+                        decibelNumber.textContent = decibels;
+
+                        // Gradual reset of visuals
+                        if (decibels < 100) {
+                            noiseStatus.textContent = "CALM STADIUM";
+                            noiseStatus.className = "text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-1";
+                            noiseRing.style.borderColor = "#475569";
+                            noiseRing.style.boxShadow = "none";
+                            
+                            visualizerBars.forEach(bar => {
+                                bar.style.height = '8px';
+                                bar.style.backgroundColor = '#475569';
+                            });
+                        } else if (decibels < 115) {
+                            noiseStatus.textContent = "STADIUM IS ROARING";
+                            noiseStatus.className = "text-[10px] text-emerald-400 font-bold uppercase tracking-wider mt-1";
+                            noiseRing.style.borderColor = "#E1A731";
+                        }
+                    } else {
+                        clearInterval(interval);
+                    }
+                }, 150);
+            }
+
+            /* 6. Sound Synthesizer via Web Audio API (Chant Soundscape Generator) */
+            const synthSoundBtn = document.getElementById('synth-sound-btn');
+            let isSynthPlaying = false;
+            let audioCtx = null;
+
+            synthSoundBtn.addEventListener('click', () => {
+                if (isSynthPlaying) return; // Prevent double trigger
+
+                isSynthPlaying = true;
+                synthSoundBtn.textContent = "Simulating Chant...";
+                synthSoundBtn.classList.add('opacity-50');
+
+                // Initialize Web Audio context safely
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+
+                const now = audioCtx.currentTime;
+                
+                // Simulate rhythmic stadium claps: Clap Clap Clap-Clap-Clap!
+                const rhythm = [0, 0.4, 0.8, 1.1, 1.4, 1.7, 2.3, 2.7, 3.1, 3.4, 3.7];
+                rhythm.forEach(delay => {
+                    playClapSound(audioCtx, now + delay);
+                });
+
+                // Simulate stadium deep rumbling noise wave (low frequency white noise filtered)
+                playStadiumRumble(audioCtx, now, 4.2);
+
+                setTimeout(() => {
+                    isSynthPlaying = false;
+                    synthSoundBtn.textContent = "Play Chant Sound";
+                    synthSoundBtn.classList.remove('opacity-50');
+                }, 4500);
+            });
+
+            function playClapSound(ctx, time) {
+                // Synth clap sound using filtered white noise with quick decay
+                const bufferSize = ctx.sampleRate * 0.1;
+                const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+
+                const noise = ctx.createBufferSource();
+                noise.buffer = buffer;
+
+                const filter = ctx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.setValueAtTime(1000, time);
+                filter.Q.setValueAtTime(1.5, time);
+
+                const gain = ctx.createGain();
+                gain.gain.setValueAtTime(0.8, time);
+                gain.gain.exponentialRampToValueAtTime(0.01, time + 0.08);
+
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(ctx.destination);
+                noise.start(time);
+            }
+
+            function playStadiumRumble(ctx, time, duration) {
+                // Low frequency noise to mimic deep crowd sound
+                const bufferSize = ctx.sampleRate * duration;
+                const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+
+                const noise = ctx.createBufferSource();
+                noise.buffer = buffer;
+
+                const filter = ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(180, time);
+                filter.frequency.exponentialRampToValueAtTime(140, time + duration);
+
+                const gain = ctx.createGain();
+                gain.gain.setValueAtTime(0.01, time);
+                gain.gain.linearRampToValueAtTime(0.25, time + 0.8);
+                gain.gain.linearRampToValueAtTime(0.25, time + duration - 0.8);
+                gain.gain.exponentialRampToValueAtTime(0.01, time + duration);
+
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(ctx.destination);
+                noise.start(time);
+            }
+
+            /* 7. Membership Form Feedback handling */
+            const form = document.getElementById('membership-form');
+            const feedback = document.getElementById('form-feedback');
+            const emailInput = document.getElementById('email-input');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                feedback.classList.remove('hidden');
+                emailInput.value = '';
+                
+                // Custom automatic toast notice (avoiding alerts)
+                const toast = document.createElement('div');
+                toast.className = "fixed bottom-5 right-5 bg-gradient-to-r from-arsenalGold to-amber-500 text-arsenalRedDarker font-black px-6 py-4 rounded-xl shadow-2xl border-2 border-white/20 z-50 text-xs tracking-wider transition-all transform translate-y-10 opacity-0";
+                toast.innerHTML = `<i class="fa-solid fa-crown mr-2"></i> WELCOME TO THE RED ARMY!`;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.remove('translate-y-10', 'opacity-0');
+                }, 50);
+
+                setTimeout(() => {
+                    toast.classList.add('translate-y-10', 'opacity-0');
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 500);
+                }, 4000);
+            });
+        });
+    </script>
+</body>
+</html>
+```
+eof
+
+### 업데이트 요약
+1. **요청된 구조 전면 반영:**
+   - 기존의 기획서 요약 표(Overview) 레이아웃을 제외하고, 기획서의 핵심 스토리텔링 5단계인 **Hero → Origin → Legacy → Rivalry → Future** 순으로 완벽하게 이어지도록 재구성하였습니다.
+2. **네비게이션 및 스크롤 고도화:**
+   - 헤더 메뉴의 클릭 이동 링크 및 모바일 메뉴의 링크들이 완벽하게 수정된 5단계의 해당 타겟 ID(`#hero`, `#origin`, `#legacy`, `#rivalry`, `#future`)를 찾아 스무스하게 연결되도록 동기화했습니다.
+3. **아스날 레드 테마의 정체성 및 무드 극대화:**
+   - 여전히 강렬하고 깊이감 있는 붉은 그라데이션 광채(Deep Red-Crimson gradient), 황금빛 디테일(Accent Gold), 그리고 실제 공식 아스날 크레스트의 럭셔리함이 흐름에 방해 없이 오롯이 부각되도록 정돈했습니다.
+
+우측의 `Preview` 버튼을 클릭하여 기획서가 의도한 정통 스토리텔링 구조대로 다시 태어난 위대한 구너들의 영광을 지금 바로 확인해보세요!
