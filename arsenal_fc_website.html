@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" class="scroll-smooth">
+<html lang="ko" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -51,14 +52,27 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        /* Glass Panel Smooth Theme Transitions */
         .glass-panel {
-            background: rgba(56, 0, 1, 0.75);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(14px);
+            border: 1px solid rgba(219, 0, 7, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dark .glass-panel {
+            background: rgba(56, 0, 1, 0.75);
             border: 1px solid rgba(225, 167, 49, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
         .glass-panel-gold {
-            background: rgba(225, 167, 49, 0.08);
+            background: rgba(225, 167, 49, 0.05);
             backdrop-filter: blur(12px);
+            border: 1px solid rgba(225, 167, 49, 0.25);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dark .glass-panel-gold {
+            background: rgba(225, 167, 49, 0.08);
             border: 1px solid rgba(225, 167, 49, 0.35);
         }
         ::-webkit-scrollbar {
@@ -77,9 +91,9 @@
         }
     </style>
 </head>
-<body class="bg-arsenalRedDarker text-slate-100 font-sans overflow-x-hidden">
+<body class="bg-slate-50 text-slate-800 dark:bg-arsenalRedDarker dark:text-slate-100 font-sans overflow-x-hidden transition-colors duration-500">
 
-    <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-arsenalRedDarker/90 backdrop-blur-md border-b border-arsenalGold/20" id="main-nav">
+    <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-white/90 dark:bg-arsenalRedDarker/90 backdrop-blur-md border-b border-arsenalRed/10 dark:border-arsenalGold/20" id="main-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <a href="#hero" class="flex items-center space-x-3 group">
                 <div class="relative w-11 h-12 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
@@ -89,114 +103,125 @@
             </a>
 
             <!-- Menu Links Matching the 5 Storytelling Steps -->
-            <div class="hidden md:flex space-x-8 items-center">
-                <a href="#hero" class="text-xs uppercase tracking-widest hover:text-arsenalGold transition-colors font-bold text-slate-100">Hero</a>
-                <a href="#origin" class="text-xs uppercase tracking-widest hover:text-arsenalGold transition-colors font-bold text-slate-100">Origin</a>
-                <a href="#legacy" class="text-xs uppercase tracking-widest hover:text-arsenalGold transition-colors font-bold text-slate-100">Legacy</a>
-                <a href="#rivalry" class="text-xs uppercase tracking-widest hover:text-arsenalGold transition-colors font-bold text-slate-100">Rivalry</a>
-                <a href="#future" class="text-xs uppercase tracking-widest hover:text-arsenalGold transition-colors font-bold text-slate-100">Future</a>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#hero" class="text-xs uppercase tracking-widest hover:text-arsenalRed dark:hover:text-arsenalGold transition-colors font-bold text-slate-700 dark:text-slate-100">Hero</a>
+                <a href="#origin" class="text-xs uppercase tracking-widest hover:text-arsenalRed dark:hover:text-arsenalGold transition-colors font-bold text-slate-700 dark:text-slate-100">Origin</a>
+                <a href="#legacy" class="text-xs uppercase tracking-widest hover:text-arsenalRed dark:hover:text-arsenalGold transition-colors font-bold text-slate-700 dark:text-slate-100">Legacy</a>
+                <a href="#rivalry" class="text-xs uppercase tracking-widest hover:text-arsenalRed dark:hover:text-arsenalGold transition-colors font-bold text-slate-700 dark:text-slate-100">Rivalry</a>
+                <a href="#future" class="text-xs uppercase tracking-widest hover:text-arsenalRed dark:hover:text-arsenalGold transition-colors font-bold text-slate-700 dark:text-slate-100">Future</a>
+                
+                <!-- Dark / Light Mode Toggle Button -->
+                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-100 dark:bg-arsenalRedDeep/50 border border-slate-200 dark:border-arsenalGold/30 hover:scale-105 active:scale-95 transition-all" aria-label="Toggle Light/Dark Theme">
+                    <i id="theme-toggle-icon" class="fa-solid fa-sun text-arsenalGold"></i>
+                </button>
+
                 <a href="#future" class="px-5 py-2.5 bg-gradient-to-r from-arsenalGold to-amber-500 text-xs uppercase tracking-widest text-arsenalRedDarker hover:scale-105 active:scale-95 font-black rounded-lg transition-all shadow-md">Join the Club</a>
             </div>
 
-            <!-- Mobile Menu Trigger -->
-            <button class="md:hidden text-slate-100 hover:text-arsenalGold transition-colors" id="menu-btn" aria-label="Toggle Menu">
-                <i class="fa-solid fa-bars text-2xl"></i>
-            </button>
+            <!-- Mobile Controller Panel (Hamburger & Toggle) -->
+            <div class="flex items-center space-x-3 md:hidden">
+                <button id="theme-toggle-mobile" class="p-2 rounded-lg bg-slate-100 dark:bg-arsenalRedDeep/50 border border-slate-200 dark:border-arsenalGold/30" aria-label="Toggle Light/Dark Theme">
+                    <i id="theme-toggle-icon-mobile" class="fa-solid fa-sun text-arsenalGold"></i>
+                </button>
+                <button class="text-slate-700 dark:text-slate-100 hover:text-arsenalRed dark:hover:text-arsenalGold transition-colors" id="menu-btn" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Mobile Menu Container -->
-        <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-0 w-full bg-arsenalDark/95 border-b border-arsenalGold/20 py-6 px-4 flex flex-col space-y-4">
-            <a href="#hero" class="mobile-link text-sm uppercase tracking-widest text-slate-200 hover:text-arsenalGold">Hero</a>
-            <a href="#origin" class="mobile-link text-sm uppercase tracking-widest text-slate-200 hover:text-arsenalGold">Origin</a>
-            <a href="#legacy" class="mobile-link text-sm uppercase tracking-widest text-slate-200 hover:text-arsenalGold">Legacy</a>
-            <a href="#rivalry" class="mobile-link text-sm uppercase tracking-widest text-slate-200 hover:text-arsenalGold">Rivalry</a>
-            <a href="#future" class="mobile-link text-sm uppercase tracking-widest text-slate-200 hover:text-arsenalGold">Future</a>
+        <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-0 w-full bg-white dark:bg-arsenalDark border-b border-arsenalRed/10 dark:border-arsenalGold/20 py-6 px-4 flex flex-col space-y-4 shadow-xl">
+            <a href="#hero" class="mobile-link text-sm uppercase tracking-widest text-slate-700 dark:text-slate-200 hover:text-arsenalRed dark:hover:text-arsenalGold font-bold">Hero</a>
+            <a href="#origin" class="mobile-link text-sm uppercase tracking-widest text-slate-700 dark:text-slate-200 hover:text-arsenalRed dark:hover:text-arsenalGold font-bold">Origin</a>
+            <a href="#legacy" class="mobile-link text-sm uppercase tracking-widest text-slate-700 dark:text-slate-200 hover:text-arsenalRed dark:hover:text-arsenalGold font-bold">Legacy</a>
+            <a href="#rivalry" class="mobile-link text-sm uppercase tracking-widest text-slate-700 dark:text-slate-200 hover:text-arsenalRed dark:hover:text-arsenalGold font-bold">Rivalry</a>
+            <a href="#future" class="mobile-link text-sm uppercase tracking-widest text-slate-700 dark:text-slate-200 hover:text-arsenalRed dark:hover:text-arsenalGold font-bold">Future</a>
             <a href="#future" class="mobile-link px-4 py-3 bg-gradient-to-r from-arsenalGold to-amber-500 text-xs uppercase tracking-widest text-arsenalRedDarker text-center font-extrabold rounded-lg hover:opacity-90 transition-all shadow-md">Join the Club</a>
         </div>
     </nav>
 
-    <header id="hero" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-gradient-to-b from-arsenalRedDeep via-arsenalRedDarker to-arsenalDark">
-        <div class="absolute inset-0 z-0 opacity-35 pointer-events-none">
+    <header id="hero" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-gradient-to-b from-red-50 via-rose-50 to-white dark:from-arsenalRedDeep dark:via-arsenalRedDarker dark:to-arsenalDark transition-colors duration-500">
+        <div class="absolute inset-0 z-0 opacity-25 dark:opacity-35 pointer-events-none">
             <div class="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-arsenalRed filter blur-[140px] animate-pulse"></div>
             <div class="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] rounded-full bg-arsenalGold filter blur-[160px] opacity-60"></div>
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center justify-center py-16">
             <!-- 2025-26 Premier League Champion badge -->
-            <div class="inline-flex items-center space-x-2 bg-arsenalGold/20 border-2 border-arsenalGold/60 px-5 py-2.5 rounded-full mb-8 animate-bounce shadow-lg backdrop-blur-sm">
-                <i class="fa-solid fa-trophy text-arsenalGold text-base"></i>
-                <span class="text-xs font-black text-arsenalGoldLight uppercase tracking-widest">2025-26 EPL Champions - The Return of the King</span>
+            <div class="inline-flex items-center space-x-2 bg-arsenalRed/10 dark:bg-arsenalGold/20 border-2 border-arsenalRed dark:border-arsenalGold/60 px-5 py-2.5 rounded-full mb-8 animate-bounce shadow-lg backdrop-blur-sm">
+                <i class="fa-solid fa-trophy text-arsenalRed dark:text-arsenalGold text-base"></i>
+                <span class="text-[10px] sm:text-xs font-black text-arsenalRed dark:text-arsenalGoldLight uppercase tracking-widest">2025-26 EPL Champions - The Return of the King</span>
             </div>
 
             <!-- Latin Club Moto / Catchphrase -->
-            <h1 class="font-serif text-4xl sm:text-6xl md:text-8xl font-black text-gradient-gold tracking-wide leading-tight mb-4 select-none drop-shadow-md">
+            <h1 class="font-serif text-3xl sm:text-6xl md:text-8xl font-black text-gradient-gold tracking-wide leading-tight mb-4 select-none drop-shadow-md break-words max-w-full px-2">
                 VICTORIA CONCORDIA CRESCIT
             </h1>
-            <p class="font-sans text-lg sm:text-2xl font-light tracking-[0.25em] text-slate-100 uppercase mb-12">
+            <p class="font-sans text-sm sm:text-2xl font-light tracking-[0.15em] sm:tracking-[0.25em] text-slate-800 dark:text-slate-100 uppercase mb-12 transition-colors duration-500 px-4">
                 "조화 속의 승리" &mdash; Victory Through Harmony
             </p>
 
             <!-- Main Interactive Official Arsenal Crest Render -->
-            <div class="relative w-64 h-64 md:w-80 md:h-80 mx-auto mb-12 transform hover:scale-105 transition-transform duration-500 cursor-pointer" id="trophy-interactive">
-                <div class="absolute inset-0 rounded-full border-2 border-dashed border-arsenalGold/40 animate-spin" style="animation-duration: 22s;"></div>
-                <div class="absolute inset-4 rounded-full border border-arsenalGold/30 animate-spin" style="animation-duration: 14s; animation-direction: reverse;"></div>
+            <div class="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 mx-auto mb-12 transform hover:scale-105 transition-transform duration-500 cursor-pointer" id="trophy-interactive">
+                <div class="absolute inset-0 rounded-full border-2 border-dashed border-arsenalRed/30 dark:border-arsenalGold/40 animate-spin" style="animation-duration: 22s;"></div>
+                <div class="absolute inset-4 rounded-full border border-arsenalRed/20 dark:border-arsenalGold/30 animate-spin" style="animation-duration: 14s; animation-direction: reverse;"></div>
                 
-                <div class="absolute inset-0 flex items-center justify-center p-12">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg" alt="Arsenal FC Official Crest" class="w-full h-full object-contain drop-shadow-[0_0_40px_rgba(219,0,7,0.75)] filter hover:brightness-110 transition-all duration-300" onerror="this.onerror=null; this.src='https://placehold.co/240x240/db0007/ffffff?text=Arsenal';">
+                <div class="absolute inset-0 flex items-center justify-center p-6 sm:p-12">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg" alt="Arsenal FC Official Crest" class="w-full h-full object-contain drop-shadow-[0_0_40px_rgba(219,0,7,0.4)] dark:drop-shadow-[0_0_40px_rgba(219,0,7,0.75)] filter hover:brightness-110 transition-all duration-300" onerror="this.onerror=null; this.src='https://placehold.co/240x240/db0007/ffffff?text=Arsenal';">
                 </div>
             </div>
 
             <!-- Scroll indicator call to action -->
-            <a href="#origin" class="flex flex-col items-center space-y-2 text-slate-200 hover:text-arsenalGold transition-colors" aria-label="Scroll Down">
+            <a href="#origin" class="flex flex-col items-center space-y-2 text-slate-700 dark:text-slate-200 hover:text-arsenalRed dark:hover:text-arsenalGold transition-colors" aria-label="Scroll Down">
                 <span class="text-xs uppercase tracking-widest font-bold">The Heritage of the Gunners</span>
-                <i class="fa-solid fa-chevron-down animate-bounce text-sm text-arsenalGold"></i>
+                <i class="fa-solid fa-chevron-down animate-bounce text-sm text-arsenalRed dark:text-arsenalGold"></i>
             </a>
         </div>
     </header>
 
-    <section id="origin" class="py-24 relative overflow-hidden bg-gradient-to-r from-arsenalRedDarker via-arsenalDark to-arsenalRedDarker border-t border-b border-arsenalGold/10">
+    <section id="origin" class="py-24 relative overflow-hidden bg-gradient-to-r from-white via-rose-50 to-white dark:from-arsenalRedDarker dark:via-arsenalDark dark:to-arsenalRedDarker border-t border-b border-arsenalRed/10 dark:border-arsenalGold/10 transition-colors duration-500">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
                 <!-- Left Hand Side Visual Asset: The Dial Square Cannon & Forge -->
-                <div class="lg:col-span-5 relative flex justify-center">
-                    <div class="relative w-80 h-80 md:w-96 md:h-96 glass-panel rounded-3xl overflow-hidden p-8 flex flex-col justify-between border-2 border-arsenalRed/50 shadow-2xl">
-                        <div class="absolute inset-0 bg-gradient-to-br from-arsenalRed/20 to-transparent pointer-events-none"></div>
+                <div class="lg:col-span-5 relative flex justify-center w-full">
+                    <div class="relative w-full max-w-xs sm:max-w-sm aspect-square glass-panel rounded-3xl overflow-hidden p-6 sm:p-8 flex flex-col justify-between border shadow-2xl">
+                        <div class="absolute inset-0 bg-gradient-to-br from-arsenalRed/10 to-transparent pointer-events-none"></div>
                         
                         <div class="flex justify-between items-start">
                             <div>
-                                <span class="text-xs uppercase tracking-widest text-arsenalGold font-black">Est. 1886</span>
-                                <h4 class="font-serif text-xl text-slate-100 font-bold mt-1">Dial Square</h4>
+                                <span class="text-xs uppercase tracking-widest text-arsenalRed dark:text-arsenalGold font-black">Est. 1886</span>
+                                <h4 class="font-serif text-lg sm:text-xl text-slate-800 dark:text-slate-100 font-bold mt-1 transition-colors duration-500">Dial Square</h4>
                             </div>
-                            <div class="text-2xl text-arsenalGold"><i class="fa-solid fa-compass-drafting"></i></div>
+                            <div class="text-xl sm:text-2xl text-arsenalRed dark:text-arsenalGold"><i class="fa-solid fa-compass-drafting"></i></div>
                         </div>
 
                         <!-- Heavy Industrial Forge Pattern (SVG Cannon silhouette) -->
-                        <div class="my-6 flex justify-center py-6">
-                            <svg class="w-48 h-48 text-slate-200/20" fill="currentColor" viewBox="0 0 24 24">
+                        <div class="my-4 sm:my-6 flex justify-center py-2 sm:py-6">
+                            <svg class="w-32 h-32 sm:w-48 sm:h-48 text-arsenalRed/10 dark:text-slate-200/20 transition-colors duration-500" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M11,10.11V4H13V10.11A3.5,3.5 0 0,1 15,13.5A3.5,3.5 0 0,1 11,17H9V19H7V17H5V15H7V13.5A3.5,3.5 0 0,1 11,10.11M13,15A1.5,1.5 0 0,0 14.5,13.5A1.5,1.5 0 0,0 13,12A1.5,1.5 0 0,0 11.5,13.5A1.5,1.5 0 0,0 13,15Z" />
                             </svg>
                         </div>
 
-                        <div class="border-t border-slate-700/60 pt-4">
-                            <p class="text-xs text-slate-300 italic">"로열 아스날 노동자들이 흘린 땀방울이 지금 포병대(The Gunners)의 위대한 뿌리가 되다."</p>
+                        <div class="border-t border-slate-300 dark:border-slate-700/60 pt-4 transition-colors duration-500">
+                            <p class="text-[11px] sm:text-xs text-slate-600 dark:text-slate-300 italic transition-colors duration-500">"로열 아스날 노동자들이 흘린 땀방울이 지금 포병대(The Gunners)의 위대한 뿌리가 되다."</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Right Hand Side Narrative Storytelling text -->
                 <div class="lg:col-span-7 space-y-6">
-                    <span class="text-xs uppercase tracking-widest text-arsenalGold font-black">The Heritage & Roots</span>
-                    <h2 class="font-serif text-4xl sm:text-5xl font-extrabold text-slate-100">조병창 노동자들의 헤리티지</h2>
-                    <p class="text-slate-200 leading-relaxed font-light">
+                    <span class="text-xs uppercase tracking-widest text-arsenalRed dark:text-arsenalGold font-black">The Heritage & Roots</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl font-extrabold text-slate-800 dark:text-slate-100 transition-colors duration-500">조병창 노동자들의 헤리티지</h2>
+                    <p class="text-slate-600 dark:text-slate-200 leading-relaxed font-light transition-colors duration-500">
                         아스날 FC의 이야기는 화려한 우승 트로피나 거대한 경기장 대신, 1886년 런던 남동부 울리치(Woolwich)의 무기 조병창 노동자들로부터 시작되었습니다. 고된 하루의 끝자락에서 모인 그들의 열정적인 작은 모임, '다이얼 스퀘어(Dial Square)'가 훗날 프리미어 리그를 뒤흔들 거대한 포병대(The Gunners)의 시작점이 될 것이라고는 아무도 예상하지 못했습니다.
                     </p>
-                    <p class="text-slate-200 leading-relaxed font-light">
+                    <p class="text-slate-600 dark:text-slate-200 leading-relaxed font-light transition-colors duration-500">
                         군수공장의 포탄과 단단한 쇠붙이, 노동의 숭고한 땀방울에서 전해진 타협 없는 붉은 정체성은 대를 이어 현재의 아스날을 구성하는 가장 뜨겁고 순수한 붉은 정체성이 되어 숨 쉬고 있습니다.
                     </p>
 
-                    <div class="border-l-4 border-arsenalGold pl-4 py-3 bg-arsenalGold/10 rounded-r-lg">
-                        <p class="font-serif italic text-slate-100">
+                    <div class="border-l-4 border-arsenalRed dark:border-arsenalGold pl-4 py-3 bg-red-500/5 dark:bg-arsenalGold/10 rounded-r-lg transition-colors duration-500">
+                        <p class="font-serif italic text-slate-800 dark:text-slate-100 transition-colors duration-500">
                             "그들의 손은 무기를 제조했지만, 가슴은 둥근 축구공을 쫓아 위대한 단결을 꿈꾸었다."
                         </p>
                     </div>
@@ -206,50 +231,50 @@
         </div>
     </section>
 
-    <section id="legacy" class="py-24 relative overflow-hidden bg-arsenalDark">
+    <section id="legacy" class="py-24 relative overflow-hidden bg-slate-100 dark:bg-arsenalDark transition-colors duration-500">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-20">
-                <span class="text-xs uppercase tracking-widest text-arsenalGold font-black">Unbeaten, Historic, Unrivaled</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-slate-100 mt-2 mb-4">위대한 황금빛 기록실</h2>
-                <p class="text-slate-300 text-sm">프리미어 리그 유일무이 골든 트로피의 대기록부터, 구단 역사 통산 2,000승 달성까지의 위엄을 느껴보세요.</p>
+                <span class="text-xs uppercase tracking-widest text-arsenalRed dark:text-arsenalGold font-black">Unbeaten, Historic, Unrivaled</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-slate-800 dark:text-slate-100 mt-2 mb-4 transition-colors duration-500">위대한 황금빛 기록실</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-sm transition-colors duration-500">프리미어 리그 유일무이 골든 트로피의 대기록부터, 구단 역사 통산 2,000승 달성까지의 위엄을 느껴보세요.</p>
                 <div class="w-20 h-1 bg-gradient-to-r from-arsenalRed to-arsenalGold mx-auto mt-4"></div>
             </div>
 
             <!-- Stats Counters Grid -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
                 <!-- Stat 1 -->
-                <div class="glass-panel p-6 rounded-2xl text-center border-t-4 border-t-arsenalGold shadow-lg">
-                    <div class="text-3xl text-arsenalGold mb-2"><i class="fa-solid fa-shield-halved"></i></div>
-                    <div class="text-4xl md:text-5xl font-extrabold text-slate-100 font-sans tracking-tight mb-2 count-up" data-target="49">0</div>
-                    <p class="text-xs uppercase tracking-widest text-slate-300 font-bold">무패 우승 경기 수 (Invincibles)</p>
+                <div class="glass-panel p-6 rounded-2xl text-center border-t-4 border-t-arsenalRed dark:border-t-arsenalGold shadow-lg">
+                    <div class="text-3xl text-arsenalRed dark:text-arsenalGold mb-2"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-slate-100 font-sans tracking-tight mb-2 count-up transition-colors duration-500" data-target="49">0</div>
+                    <p class="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-300 font-bold transition-colors duration-500">무패 우승 경기 수 (Invincibles)</p>
                 </div>
                 <!-- Stat 2 -->
-                <div class="glass-panel p-6 rounded-2xl text-center border-t-4 border-t-arsenalGold shadow-lg">
-                    <div class="text-3xl text-arsenalGold mb-2"><i class="fa-solid fa-trophy"></i></div>
-                    <div class="text-4xl md:text-5xl font-extrabold text-slate-100 font-sans tracking-tight mb-2 count-up" data-target="14">0</div>
-                    <p class="text-xs uppercase tracking-widest text-slate-300 font-bold">FA 컵 최다 우승</p>
+                <div class="glass-panel p-6 rounded-2xl text-center border-t-4 border-t-arsenalRed dark:border-t-arsenalGold shadow-lg">
+                    <div class="text-3xl text-arsenalRed dark:text-arsenalGold mb-2"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-slate-100 font-sans tracking-tight mb-2 count-up transition-colors duration-500" data-target="14">0</div>
+                    <p class="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-300 font-bold transition-colors duration-500">FA 컵 최다 우승</p>
                 </div>
                 <!-- Stat 3 -->
-                <div class="glass-panel p-6 rounded-2xl text-center border-t-4 border-t-arsenalGold shadow-lg">
-                    <div class="text-3xl text-arsenalGold mb-2"><i class="fa-solid fa-crown"></i></div>
-                    <div class="text-4xl md:text-5xl font-extrabold text-slate-100 font-sans tracking-tight mb-2 count-up" data-target="2000">0</div>
-                    <p class="text-xs uppercase tracking-widest text-slate-300 font-bold">역사상 통산 승리 수 (1부)</p>
+                <div class="glass-panel p-6 rounded-2xl text-center border-t-4 border-t-arsenalRed dark:border-t-arsenalGold shadow-lg">
+                    <div class="text-3xl text-arsenalRed dark:text-arsenalGold mb-2"><i class="fa-solid fa-crown"></i></div>
+                    <div class="text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-slate-100 font-sans tracking-tight mb-2 count-up transition-colors duration-500" data-target="2000">0</div>
+                    <p class="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-300 font-bold transition-colors duration-500">역사상 통산 승리 수 (1부)</p>
                 </div>
                 <!-- Stat 4 -->
-                <div class="glass-panel p-6 rounded-2xl text-center border-t-4 border-t-arsenalGold shadow-lg">
-                    <div class="text-3xl text-arsenalGold mb-2"><i class="fa-solid fa-star"></i></div>
-                    <div class="text-4xl md:text-5xl font-extrabold text-slate-100 font-sans tracking-tight mb-2 count-up" data-target="13">0</div>
-                    <p class="text-xs uppercase tracking-widest text-slate-300 font-bold">리그 우승 통산 횟수</p>
+                <div class="glass-panel p-6 rounded-2xl text-center border-t-4 border-t-arsenalRed dark:border-t-arsenalGold shadow-lg">
+                    <div class="text-3xl text-arsenalRed dark:text-arsenalGold mb-2"><i class="fa-solid fa-star"></i></div>
+                    <div class="text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-slate-100 font-sans tracking-tight mb-2 count-up transition-colors duration-500" data-target="13">0</div>
+                    <p class="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-300 font-bold transition-colors duration-500">리그 우승 통산 횟수</p>
                 </div>
             </div>
 
             <!-- Timeline Tabs for Legacy Moments -->
-            <div class="glass-panel p-6 md:p-12 rounded-3xl border-2 border-arsenalGold/30 shadow-2xl">
-                <div class="flex flex-wrap justify-center gap-4 mb-10" id="timeline-tabs">
-                    <button class="tab-btn px-6 py-3 rounded-lg text-xs uppercase tracking-widest font-black bg-arsenalGold text-arsenalRedDarker transition-all shadow-md" data-target="timeline-1886">1886 - Dial Square</button>
-                    <button class="tab-btn px-6 py-3 rounded-lg text-xs uppercase tracking-widest font-black bg-arsenalRedDeep/40 text-slate-200 border border-arsenalGold/20 hover:bg-arsenalRedDeep transition-all" data-target="timeline-1913">1913 - Highbury</button>
-                    <button class="tab-btn px-6 py-3 rounded-lg text-xs uppercase tracking-widest font-black bg-arsenalRedDeep/40 text-slate-200 border border-arsenalGold/20 hover:bg-arsenalRedDeep transition-all" data-target="timeline-2004">2004 - Invincibles</button>
-                    <button class="tab-btn px-6 py-3 rounded-lg text-xs uppercase tracking-widest font-black bg-arsenalRedDeep/40 text-slate-200 border border-arsenalGold/20 hover:bg-arsenalRedDeep transition-all" data-target="timeline-2026">2026 - Modern Era</button>
+            <div class="glass-panel p-4 sm:p-6 md:p-12 rounded-3xl shadow-2xl">
+                <div class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 sm:mb-10" id="timeline-tabs">
+                    <button class="tab-btn px-3 py-2 sm:px-6 sm:py-3 rounded-lg text-[10px] sm:text-xs uppercase tracking-widest font-black bg-arsenalRed text-white dark:bg-arsenalGold dark:text-arsenalRedDarker transition-all shadow-md" data-target="timeline-1886">1886 - Dial</button>
+                    <button class="tab-btn px-3 py-2 sm:px-6 sm:py-3 rounded-lg text-[10px] sm:text-xs uppercase tracking-widest font-black bg-slate-200/60 text-slate-700 dark:bg-arsenalRedDeep/40 dark:text-slate-200 border border-slate-300 dark:border-arsenalGold/20 hover:bg-slate-300 dark:hover:bg-arsenalRedDeep transition-all" data-target="timeline-1913">1913 - Highbury</button>
+                    <button class="tab-btn px-3 py-2 sm:px-6 sm:py-3 rounded-lg text-[10px] sm:text-xs uppercase tracking-widest font-black bg-slate-200/60 text-slate-700 dark:bg-arsenalRedDeep/40 dark:text-slate-200 border border-slate-300 dark:border-arsenalGold/20 hover:bg-slate-300 dark:hover:bg-arsenalRedDeep transition-all" data-target="timeline-2004">2004 - Invincibles</button>
+                    <button class="tab-btn px-3 py-2 sm:px-6 sm:py-3 rounded-lg text-[10px] sm:text-xs uppercase tracking-widest font-black bg-slate-200/60 text-slate-700 dark:bg-arsenalRedDeep/40 dark:text-slate-200 border border-slate-300 dark:border-arsenalGold/20 hover:bg-slate-300 dark:hover:bg-arsenalRedDeep transition-all" data-target="timeline-2026">2026 - Champion</button>
                 </div>
 
                 <div id="timeline-contents" class="relative">
@@ -257,15 +282,15 @@
                     <div id="timeline-1886" class="tab-content transition-opacity duration-300">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                             <div class="space-y-4">
-                                <span class="text-xs uppercase tracking-widest text-arsenalGold font-bold">The Birth of Legend</span>
-                                <h3 class="font-serif text-2xl md:text-3xl font-extrabold text-slate-100">조병창 노동자들의 첫 태동</h3>
-                                <p class="text-slate-200 text-sm leading-relaxed">
+                                <span class="text-xs uppercase tracking-widest text-arsenalRed dark:text-arsenalGold font-bold">The Birth of Legend</span>
+                                <h3 class="font-serif text-2xl md:text-3xl font-extrabold text-slate-800 dark:text-slate-100 transition-colors duration-500">조병창 노동자들의 첫 태동</h3>
+                                <p class="text-slate-600 dark:text-slate-200 text-sm leading-relaxed transition-colors duration-500">
                                     런던 남동부 울리치 Royal Arsenal 노동자들 15명이 힘을 합쳐 최초의 클럽 '다이얼 스퀘어'를 결성했습니다. 첫 경기였던 이스턴 원더러스와의 대결에서 6대 0의 대승을 장식하며 전설의 신호탄을 쏘아 올렸습니다.
                                 </p>
                             </div>
-                            <div class="p-6 bg-arsenalRedDarker/80 rounded-2xl border border-arsenalGold/20">
-                                <h4 class="text-xs font-black text-arsenalGold uppercase mb-3">Historical Record File</h4>
-                                <ul class="space-y-2 text-xs text-slate-200">
+                            <div class="p-6 bg-rose-50/60 dark:bg-arsenalRedDarker/80 rounded-2xl border border-slate-200 dark:border-arsenalGold/20 transition-colors duration-500">
+                                <h4 class="text-xs font-black text-arsenalRed dark:text-arsenalGold uppercase mb-3 transition-colors duration-500">Historical Record File</h4>
+                                <ul class="space-y-2 text-xs text-slate-700 dark:text-slate-200 transition-colors duration-500">
                                     <li><strong>구단 설립 명칭:</strong> Dial Square FC</li>
                                     <li><strong>최초 경기장:</strong> Plumstead Common</li>
                                     <li><strong>기념비적 유산:</strong> 훗날 Royal Arsenal, Woolwich Arsenal을 거쳐 현재의 Arsenal로 정착</li>
@@ -278,15 +303,15 @@
                     <div id="timeline-1913" class="tab-content hidden opacity-0 transition-opacity duration-300">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                             <div class="space-y-4">
-                                <span class="text-xs uppercase tracking-widest text-arsenalGold font-bold">New Fortress</span>
-                                <h3 class="font-serif text-2xl md:text-3xl font-extrabold text-slate-100">하이버리 스타디움의 개장</h3>
-                                <p class="text-slate-200 text-sm leading-relaxed">
+                                <span class="text-xs uppercase tracking-widest text-arsenalRed dark:text-arsenalGold font-bold">New Fortress</span>
+                                <h3 class="font-serif text-2xl md:text-3xl font-extrabold text-slate-800 dark:text-slate-100 transition-colors duration-500">하이버리 스타디움의 개장</h3>
+                                <p class="text-slate-600 dark:text-slate-200 text-sm leading-relaxed transition-colors duration-500">
                                     남부 울리치에서 북런던 하이버리(Highbury)로의 대대적인 연고지 이전을 단행했습니다. 하이버리는 우아한 아트 데코 스타일의 웅장한 경기장으로 발전하며, 북런던 축구의 찬란한 중심축으로 군림하게 되었습니다.
                                 </p>
                             </div>
-                            <div class="p-6 bg-arsenalRedDarker/80 rounded-2xl border border-arsenalGold/20">
-                                <h4 class="text-xs font-black text-arsenalGold uppercase mb-3">Highbury Milestones</h4>
-                                <ul class="space-y-2 text-xs text-slate-200">
+                            <div class="p-6 bg-rose-50/60 dark:bg-arsenalRedDarker/80 rounded-2xl border border-slate-200 dark:border-arsenalGold/20 transition-colors duration-500">
+                                <h4 class="text-xs font-black text-arsenalRed dark:text-arsenalGold uppercase mb-3 transition-colors duration-500">Highbury Milestones</h4>
+                                <ul class="space-y-2 text-xs text-slate-700 dark:text-slate-200 transition-colors duration-500">
                                     <li><strong>역사적 명칭:</strong> Arsenal Stadium (Highbury)</li>
                                     <li><strong>아이콘 설계:</strong> 아치볼드 리치 (Archibald Leitch)</li>
                                     <li><strong>수많은 영광:</strong> 93년간 아스날 역사의 홈구장으로서 리그 우승 전설들을 탄생시킴</li>
@@ -299,15 +324,15 @@
                     <div id="timeline-2004" class="tab-content hidden opacity-0 transition-opacity duration-300">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                             <div class="space-y-4">
-                                <span class="text-xs uppercase tracking-widest text-arsenalGold font-bold">The Golden Record</span>
-                                <h3 class="font-serif text-2xl md:text-3xl font-extrabold text-slate-100">49경기 무패, 전무후무한 황금 트로피</h3>
-                                <p class="text-slate-200 text-sm leading-relaxed">
+                                <span class="text-xs uppercase tracking-widest text-arsenalRed dark:text-arsenalGold font-bold">The Golden Record</span>
+                                <h3 class="font-serif text-2xl md:text-3xl font-extrabold text-slate-800 dark:text-slate-100 transition-colors duration-500">49경기 무패, 전무후무한 황금 트로피</h3>
+                                <p class="text-slate-600 dark:text-slate-200 text-sm leading-relaxed transition-colors duration-500">
                                     2003-04 시즌, 프리미어 리그 역사상 그 누구도 도달하지 못한 대기록이 달성됩니다. 26승 12무, 패배를 잊은 채 완벽한 축구(The Invincibles)를 선보이며 유일무이한 '황금빛 엠블럼 트로피'를 영원히 손에 쥐었습니다.
                                 </p>
                             </div>
-                            <div class="p-6 bg-arsenalRedDarker/80 rounded-2xl border border-arsenalGold/20">
-                                <h4 class="text-xs font-black text-arsenalGold uppercase mb-3">The Invincibles Squad</h4>
-                                <ul class="space-y-2 text-xs text-slate-200">
+                            <div class="p-6 bg-rose-50/60 dark:bg-arsenalRedDarker/80 rounded-2xl border border-slate-200 dark:border-arsenalGold/20 transition-colors duration-500">
+                                <h4 class="text-xs font-black text-arsenalRed dark:text-arsenalGold uppercase mb-3 transition-colors duration-500">The Invincibles Squad</h4>
+                                <ul class="space-y-2 text-xs text-slate-700 dark:text-slate-200 transition-colors duration-500">
                                     <li><strong>총감독:</strong> 아르센 벵거 (Arsène Wenger)</li>
                                     <li><strong>수훈 선수:</strong> 티에리 앙리, 데니스 베르캄프, 파트리크 비에라</li>
                                     <li><strong>기록:</strong> 49경기 연속 무패 및 리그 유일의 무패 우승 달성</li>
@@ -320,15 +345,15 @@
                     <div id="timeline-2026" class="tab-content hidden opacity-0 transition-opacity duration-300">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                             <div class="space-y-4">
-                                <span class="text-xs uppercase tracking-widest text-arsenalGold font-bold">Modern Era Dominance</span>
-                                <h3 class="font-serif text-2xl md:text-3xl font-extrabold text-slate-100">2025-26 시즌, 잉글랜드 챔피언의 완벽한 복귀</h3>
-                                <p class="text-slate-200 text-sm leading-relaxed">
+                                <span class="text-xs uppercase tracking-widest text-arsenalRed dark:text-arsenalGold font-bold">Modern Era Dominance</span>
+                                <h3 class="font-serif text-2xl md:text-3xl font-extrabold text-slate-800 dark:text-slate-100 transition-colors duration-500">2025-26 시즌, 잉글랜드 챔피언의 완벽한 복귀</h3>
+                                <p class="text-slate-600 dark:text-slate-200 text-sm leading-relaxed transition-colors duration-500">
                                     젊고 에너지 넘치는 전술과 하나로 조화된 군단으로 무장한 미켈 아르테타 체제의 아스날은 마침내 격렬했던 2025-26 잉글랜드 프리미어리그 왕좌를 거머쥐었습니다. 역사의 한 페이지에 머무는 아스날이 아니라, 진정한 왕의 귀환을 알리는 순간입니다.
                                 </p>
                             </div>
-                            <div class="p-6 bg-arsenalRedDarker/80 rounded-2xl border border-arsenalGold/20">
-                                <h4 class="text-xs font-black text-arsenalGold uppercase mb-3">Champions Blueprint</h4>
-                                <ul class="space-y-2 text-xs text-slate-200">
+                            <div class="p-6 bg-rose-50/60 dark:bg-arsenalRedDarker/80 rounded-2xl border border-slate-200 dark:border-arsenalGold/20 transition-colors duration-500">
+                                <h4 class="text-xs font-black text-arsenalRed dark:text-arsenalGold uppercase mb-3 transition-colors duration-500">Champions Blueprint</h4>
+                                <ul class="space-y-2 text-xs text-slate-700 dark:text-slate-200 transition-colors duration-500">
                                     <li><strong>우승 성과:</strong> 25-26 EPL 챔피언 & 최저 실점 달성</li>
                                     <li><strong>핵심 아이덴티티:</strong> 조화(Concordia)와 무서운 조직력의 극치</li>
                                     <li><strong>미래 포부:</strong> 다가올 UEFA 챔피언스 리그의 연속 제패 조준</li>
@@ -341,10 +366,10 @@
         </div>
     </section>
 
-    <section id="rivalry" class="py-24 relative overflow-hidden bg-gradient-to-b from-arsenalDark to-arsenalRedDarker border-t border-b border-arsenalGold/10">
+    <section id="rivalry" class="py-24 relative overflow-hidden bg-gradient-to-b from-white to-rose-50 dark:from-arsenalDark dark:to-arsenalRedDarker border-t border-b border-arsenalRed/10 dark:border-arsenalGold/10 transition-colors duration-500">
         <div class="absolute inset-0 pointer-events-none opacity-20">
             <!-- Stadium Noise Background Waves Graphic -->
-            <svg class="w-full h-full text-arsenalRed" viewBox="0 0 1440 320" fill="currentColor">
+            <svg class="w-full h-full text-arsenalRed/10 dark:text-arsenalRed transition-colors duration-500" viewBox="0 0 1440 320" fill="currentColor">
                 <path d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,117.3C960,107,1056,149,1152,176C1248,203,1344,213,1392,218.7L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
             </svg>
         </div>
@@ -354,22 +379,22 @@
                 
                 <!-- Left Hand Narrative of the North London Derby -->
                 <div class="lg:col-span-6 space-y-6">
-                    <span class="text-xs uppercase tracking-widest text-arsenalGold font-black">The Fierce Rivalry</span>
-                    <h2 class="font-serif text-4xl sm:text-5xl font-extrabold text-slate-100">양보 없는 북런던 더비</h2>
-                    <p class="text-slate-200 leading-relaxed font-light">
+                    <span class="text-xs uppercase tracking-widest text-arsenalRed dark:text-arsenalGold font-black">The Fierce Rivalry</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl font-extrabold text-slate-800 dark:text-slate-100 transition-colors duration-500">양보 없는 북런던 더비</h2>
+                    <p class="text-slate-600 dark:text-slate-200 leading-relaxed font-light transition-colors duration-500">
                         화이트 하트 레인을 넘어 토트넘 핫스퍼 스타디움까지, 토트넘 홋스퍼와의 '북런던 더비'는 단순한 한 판의 축구 경기가 아닙니다. 이것은 런던 북부의 자존심이자, 수백만 구너(Gooners)가 목놓아 불러야 할 삶의 이유 그 자체입니다.
                     </p>
-                    <p class="text-slate-200 leading-relaxed font-light">
+                    <p class="text-slate-600 dark:text-slate-200 leading-relaxed font-light transition-colors duration-500">
                         경기 당일 에미레이트 스타디움을 뜨겁게 달구는 찬가 **"North London Forever"**가 심장을 가득 채울 때, 북런던의 붉은 물결은 결코 타협하지 않는 열정으로 불타오릅니다.
                     </p>
                     
                     <!-- Soundscape Synthesizer Info & Interactive Play Button -->
                     <div class="glass-panel-gold p-4 rounded-xl flex items-center justify-between">
                         <div>
-                            <h4 class="text-sm font-bold text-slate-100"><i class="fa-solid fa-volume-high text-arsenalGold mr-2 animate-bounce"></i>Chant Soundscape Generator</h4>
-                            <p class="text-xs text-slate-300 mt-1">구장의 심장박동과 손뼉 소리 리듬을 사운드로 직접 들어보세요.</p>
+                            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100 transition-colors duration-500"><i class="fa-solid fa-volume-high text-arsenalRed dark:text-arsenalGold mr-2 animate-bounce"></i>Chant Soundscape Generator</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 transition-colors duration-500">구장의 심장박동과 손뼉 소리 리듬을 사운드로 직접 들어보세요.</p>
                         </div>
-                        <button id="synth-sound-btn" class="px-5 py-2.5 bg-gradient-to-r from-arsenalGold to-amber-500 text-arsenalRedDarker hover:scale-105 rounded-lg text-xs font-black uppercase tracking-wider transition-all shadow-md active:scale-95">
+                        <button id="synth-sound-btn" class="px-5 py-2.5 bg-gradient-to-r from-arsenalRed to-red-600 dark:from-arsenalGold dark:to-amber-500 text-white dark:text-arsenalRedDarker hover:scale-105 rounded-lg text-xs font-black uppercase tracking-wider transition-all shadow-md active:scale-95">
                             Play Chant Sound
                         </button>
                     </div>
@@ -377,39 +402,39 @@
 
                 <!-- Right Hand Interactive Experience: The Fan Noise Meter Game & Sound Generator -->
                 <div class="lg:col-span-6">
-                    <div class="glass-panel p-8 rounded-3xl border-2 border-arsenalGold/30 relative overflow-hidden shadow-2xl">
+                    <div class="glass-panel p-5 sm:p-8 rounded-3xl relative overflow-hidden shadow-2xl">
                         <!-- Red hot ambiance inside card -->
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-arsenalRed/20 rounded-full filter blur-xl pointer-events-none"></div>
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-arsenalRed/10 rounded-full filter blur-xl pointer-events-none"></div>
                         
                         <div class="text-center mb-6">
-                            <h3 class="font-serif text-xl font-bold text-gradient-gold">Emirates Atmosphere Simulator</h3>
-                            <p class="text-xs text-slate-300 mt-1">"North London Forever!" 응원 버튼을 연속 클릭하여 에미레이츠의 가상의 팬 소음을 극대화하고 경기장 데시벨 신기록을 달성해보세요!</p>
+                            <h3 class="font-serif text-xl font-bold text-slate-800 dark:text-gradient-gold transition-colors duration-500">Emirates Atmosphere Simulator</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-300 mt-1 transition-colors duration-500">"North London Forever!" 응원 버튼을 연속 클릭하여 에미레이츠의 가상의 팬 소음을 극대화하고 경기장 데시벨 신기록을 달성해보세요!</p>
                         </div>
 
                         <!-- Decibel Circle Dial -->
-                        <div class="relative w-48 h-48 mx-auto mb-8 flex flex-col items-center justify-center rounded-full border-4 border-slate-700 transition-all duration-300" id="noise-ring">
-                            <div class="absolute inset-2 rounded-full bg-arsenalRedDarker/90 flex flex-col items-center justify-center border border-arsenalGold/20">
-                                <span class="text-xs text-slate-400 uppercase tracking-widest">Decibel</span>
-                                <span class="text-4xl font-extrabold text-slate-100" id="decibel-number">80</span>
-                                <span class="text-[10px] text-slate-300 font-bold uppercase tracking-wider mt-1" id="noise-status">CALM STADIUM</span>
+                        <div class="relative w-48 h-48 mx-auto mb-8 flex flex-col items-center justify-center rounded-full border-4 border-slate-300 dark:border-slate-700 transition-all duration-300" id="noise-ring">
+                            <div class="absolute inset-2 rounded-full bg-white dark:bg-arsenalRedDarker/90 flex flex-col items-center justify-center border border-slate-200 dark:border-arsenalGold/20 transition-all duration-500">
+                                <span class="text-xs text-slate-400 dark:text-slate-400 uppercase tracking-widest">Decibel</span>
+                                <span class="text-4xl font-extrabold text-slate-800 dark:text-slate-100" id="decibel-number">80</span>
+                                <span class="text-[10px] text-slate-500 dark:text-slate-300 font-bold uppercase tracking-wider mt-1" id="noise-status">CALM STADIUM</span>
                             </div>
                         </div>
 
                         <!-- Clicker and Visualizer Waveform -->
                         <div class="space-y-4">
                             <div class="flex space-x-1 justify-center h-8 items-end mb-4" id="audio-visualizer">
-                                <span class="w-1.5 bg-slate-600 rounded-full h-2 transition-all duration-150"></span>
-                                <span class="w-1.5 bg-slate-600 rounded-full h-3 transition-all duration-150"></span>
-                                <span class="w-1.5 bg-slate-600 rounded-full h-2 transition-all duration-150"></span>
-                                <span class="w-1.5 bg-slate-600 rounded-full h-4 transition-all duration-150"></span>
-                                <span class="w-1.5 bg-slate-600 rounded-full h-5 transition-all duration-150"></span>
-                                <span class="w-1.5 bg-slate-600 rounded-full h-3 transition-all duration-150"></span>
-                                <span class="w-1.5 bg-slate-600 rounded-full h-2 transition-all duration-150"></span>
-                                <span class="w-1.5 bg-slate-600 rounded-full h-4 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-300 dark:bg-slate-600 rounded-full h-2 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-300 dark:bg-slate-600 rounded-full h-3 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-300 dark:bg-slate-600 rounded-full h-2 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-300 dark:bg-slate-600 rounded-full h-4 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-300 dark:bg-slate-600 rounded-full h-5 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-300 dark:bg-slate-600 rounded-full h-3 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-300 dark:bg-slate-600 rounded-full h-2 transition-all duration-150"></span>
+                                <span class="w-1.5 bg-slate-300 dark:bg-slate-600 rounded-full h-4 transition-all duration-150"></span>
                             </div>
 
                             <div class="flex justify-center">
-                                <button id="chant-clicker" class="px-8 py-4 bg-gradient-to-r from-arsenalRed to-red-600 hover:from-red-600 hover:to-red-700 text-white font-black uppercase tracking-widest text-xs rounded-xl shadow-lg hover:shadow-red-500/30 transform hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all w-full max-w-sm border border-arsenalGold/30">
+                                <button id="chant-clicker" class="px-8 py-4 bg-gradient-to-r from-arsenalRed to-red-600 hover:from-red-600 hover:to-red-700 text-white font-black uppercase tracking-widest text-xs rounded-xl shadow-lg hover:shadow-red-500/30 transform hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all w-full max-w-sm border border-arsenalRed/20 dark:border-arsenalGold/30">
                                     📣 Chant: "North London Forever!"
                                 </button>
                             </div>
@@ -421,35 +446,35 @@
         </div>
     </section>
 
-    <section id="future" class="py-24 relative overflow-hidden bg-gradient-to-b from-arsenalRedDarker to-arsenalDark">
+    <section id="future" class="py-24 relative overflow-hidden bg-gradient-to-b from-rose-50 to-slate-100 dark:from-arsenalRedDarker dark:to-arsenalDark transition-colors duration-500">
         <div class="absolute inset-0 pointer-events-none opacity-20">
             <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-arsenalGold filter blur-[180px]"></div>
         </div>
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-8">
-            <span class="text-xs uppercase tracking-widest text-arsenalGold font-black">Join the Legend, Secure the Era</span>
-            <h2 class="font-serif text-4xl sm:text-6xl font-extrabold text-slate-100">ALWAYS FORWARD</h2>
-            <p class="text-slate-200 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed font-light">
+            <span class="text-xs uppercase tracking-widest text-arsenalRed dark:text-arsenalGold font-black">Join the Legend, Secure the Era</span>
+            <h2 class="font-serif text-4xl sm:text-6xl font-extrabold text-slate-800 dark:text-slate-100 transition-colors duration-500">ALWAYS FORWARD</h2>
+            <p class="text-slate-600 dark:text-slate-200 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed font-light transition-colors duration-500">
                 우리는 역사에 안주하지 않습니다. 로열 아스날 조병창의 단단한 철공에서 25-26 시즌 우승 트로피까지, 구너들과 함께 끊임없이 앞으로 나아갈 뿐입니다. 오늘 공식 아스날 멤버십에 가입하고 매주 펼쳐지는 챔피언의 전율에 동참하십시오.
             </p>
 
             <!-- Membership Portal Form -->
-            <form id="membership-form" class="max-w-md mx-auto mt-8 flex flex-col sm:flex-row gap-2 bg-arsenalRedDarker/80 p-2.5 rounded-2xl border-2 border-arsenalGold/30 backdrop-blur-md shadow-2xl">
-                <input type="email" id="email-input" placeholder="Enter your email address" class="bg-transparent border-0 px-4 py-3 text-sm focus:ring-0 focus:outline-none text-white placeholder-slate-400 flex-grow" required>
-                <button type="submit" class="bg-gradient-to-r from-arsenalGold to-amber-500 hover:from-amber-500 hover:to-amber-600 text-arsenalRedDarker font-black uppercase tracking-widest text-xs px-6 py-4 rounded-xl transition-all shadow-md">
+            <form id="membership-form" class="max-w-md mx-auto mt-8 flex flex-col sm:flex-row gap-2 bg-white/80 dark:bg-arsenalRedDarker/80 p-2.5 rounded-2xl border-2 border-slate-300 dark:border-arsenalGold/30 backdrop-blur-md shadow-2xl transition-all">
+                <input type="email" id="email-input" placeholder="Enter your email address" class="bg-transparent border-0 px-4 py-3 text-sm focus:ring-0 focus:outline-none text-slate-800 dark:text-white placeholder-slate-400 flex-grow" required>
+                <button type="submit" class="bg-gradient-to-r from-arsenalRed to-red-600 dark:from-arsenalGold dark:to-amber-500 text-white dark:text-arsenalRedDarker font-black uppercase tracking-widest text-xs px-6 py-4 rounded-xl transition-all shadow-md">
                     Become a Gunner
                 </button>
             </form>
 
-            <div id="form-feedback" class="hidden text-xs text-emerald-400 mt-2 font-bold">
+            <div id="form-feedback" class="hidden text-xs text-emerald-600 dark:text-emerald-400 mt-2 font-bold transition-colors duration-500">
                 <i class="fa-solid fa-circle-check mr-1 animate-pulse"></i> 아스날의 가족이 되신 것을 영광으로 생각합니다! 이메일 함을 확인하세요.
             </div>
 
-            <p class="text-[10px] text-slate-300 tracking-wider font-semibold">By subscribing, you agree to receive official Arsenal updates & ticketing offers.</p>
+            <p class="text-[10px] text-slate-500 dark:text-slate-300 tracking-wider font-semibold transition-colors duration-500">By subscribing, you agree to receive official Arsenal updates & ticketing offers.</p>
         </div>
     </section>
 
-    <footer class="bg-arsenalDark text-slate-300 border-t border-arsenalGold/20 py-16 relative z-10">
+    <footer class="bg-slate-100 dark:bg-arsenalDark text-slate-600 dark:text-slate-300 border-t border-slate-200 dark:border-arsenalGold/20 py-16 relative z-10 transition-colors duration-500">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                 
@@ -463,25 +488,25 @@
                         </div>
                         <span class="font-serif font-black text-lg tracking-wider text-gradient-gold">ARSENAL FC</span>
                     </div>
-                    <p class="text-xs text-slate-300 font-light leading-relaxed">"Victoria Concordia Crescit" - 가슴속 영원히 붉게 고동치는 런던 정통 조화와 단합의 승리 공식.</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-300 font-light leading-relaxed transition-colors duration-500">"Victoria Concordia Crescit" - 가슴속 영원히 붉게 고동치는 런던 정통 조화와 단합의 승리 공식.</p>
                 </div>
 
                 <!-- Col 2: Navigation Links -->
                 <div>
-                    <h4 class="text-xs font-black text-slate-100 uppercase tracking-widest mb-4">Navigations</h4>
+                    <h4 class="text-xs font-black text-slate-800 dark:text-slate-100 uppercase tracking-widest mb-4 transition-colors duration-500">Navigations</h4>
                     <ul class="space-y-2 text-xs">
-                        <li><a href="#hero" class="hover:text-arsenalGold transition-colors">Hero Intro</a></li>
-                        <li><a href="#origin" class="hover:text-arsenalGold transition-colors">The Origin Legacy</a></li>
-                        <li><a href="#legacy" class="hover:text-arsenalGold transition-colors">Golden Trophy Record</a></li>
-                        <li><a href="#rivalry" class="hover:text-arsenalGold transition-colors">North London Rivalry</a></li>
-                        <li><a href="#future" class="hover:text-arsenalGold transition-colors">Future Vision</a></li>
+                        <li><a href="#hero" class="hover:text-arsenalRed dark:hover:text-arsenalGold transition-colors">Hero Intro</a></li>
+                        <li><a href="#origin" class="hover:text-arsenalRed dark:hover:text-arsenalGold transition-colors">The Origin Legacy</a></li>
+                        <li><a href="#legacy" class="hover:text-arsenalRed dark:hover:text-arsenalGold transition-colors">Golden Trophy Record</a></li>
+                        <li><a href="#rivalry" class="hover:text-arsenalRed dark:hover:text-arsenalGold transition-colors">North London Rivalry</a></li>
+                        <li><a href="#future" class="hover:text-arsenalRed dark:hover:text-arsenalGold transition-colors">Future Vision</a></li>
                     </ul>
                 </div>
 
                 <!-- Col 3: Stadium Hours -->
                 <div>
-                    <h4 class="text-xs font-black text-slate-100 uppercase tracking-widest mb-4">Emirates Stadium</h4>
-                    <p class="text-xs text-slate-300 leading-relaxed font-light">
+                    <h4 class="text-xs font-black text-slate-800 dark:text-slate-100 uppercase tracking-widest mb-4 transition-colors duration-500">Emirates Stadium</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-300 leading-relaxed font-light transition-colors duration-500">
                         Hornsey Rd, London N7 9AJ<br>
                         United Kingdom<br>
                         Stadium Tours: 10:00 AM - 17:00 PM<br>
@@ -491,18 +516,18 @@
 
                 <!-- Col 4: Official Fan Support -->
                 <div>
-                    <h4 class="text-xs font-black text-slate-100 uppercase tracking-widest mb-4">Official Channels</h4>
+                    <h4 class="text-xs font-black text-slate-800 dark:text-slate-100 uppercase tracking-widest mb-4 transition-colors duration-500">Official Channels</h4>
                     <div class="flex space-x-4 mb-4">
-                        <a href="https://twitter.com/Arsenal" target="_blank" class="w-8 h-8 rounded-full bg-arsenalRedDeep border border-arsenalGold/30 flex items-center justify-center hover:text-arsenalGold hover:border-arsenalGold transition-all" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter text-white"></i></a>
-                        <a href="https://www.instagram.com/arsenal" target="_blank" class="w-8 h-8 rounded-full bg-arsenalRedDeep border border-arsenalGold/30 flex items-center justify-center hover:text-arsenalGold hover:border-arsenalGold transition-all" aria-label="Instagram"><i class="fa-brands fa-instagram text-white"></i></a>
-                        <a href="https://www.youtube.com/user/ArsenalTour" target="_blank" class="w-8 h-8 rounded-full bg-arsenalRedDeep border border-arsenalGold/30 flex items-center justify-center hover:text-arsenalGold hover:border-arsenalGold transition-all" aria-label="YouTube"><i class="fa-brands fa-youtube text-white"></i></a>
+                        <a href="https://twitter.com/Arsenal" target="_blank" class="w-8 h-8 rounded-full bg-slate-200 dark:bg-arsenalRedDeep border border-slate-300 dark:border-arsenalGold/30 flex items-center justify-center hover:text-arsenalRed hover:border-arsenalRed dark:hover:text-arsenalGold transition-all" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter text-slate-700 dark:text-white"></i></a>
+                        <a href="https://www.instagram.com/arsenal" target="_blank" class="w-8 h-8 rounded-full bg-slate-200 dark:bg-arsenalRedDeep border border-slate-300 dark:border-arsenalGold/30 flex items-center justify-center hover:text-arsenalRed hover:border-arsenalRed dark:hover:text-arsenalGold transition-all" aria-label="Instagram"><i class="fa-brands fa-instagram text-slate-700 dark:text-white"></i></a>
+                        <a href="https://www.youtube.com/user/ArsenalTour" target="_blank" class="w-8 h-8 rounded-full bg-slate-200 dark:bg-arsenalRedDeep border border-slate-300 dark:border-arsenalGold/30 flex items-center justify-center hover:text-arsenalRed hover:border-arsenalRed dark:hover:text-arsenalGold transition-all" aria-label="YouTube"><i class="fa-brands fa-youtube text-slate-700 dark:text-white"></i></a>
                     </div>
                     <p class="text-[10px] text-slate-400">This webpage serves as an elegant Arsenal Branding Concept UI/UX representation.</p>
                 </div>
 
             </div>
 
-            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400">
+            <div class="border-t border-slate-300 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400 transition-colors duration-500">
                 <p>&copy; 2026 Arsenal FC Branding Concept. Developed for Gooners Worldwide.</p>
                 <p class="mt-4 md:mt-0">Victoria Concordia Crescit &bull; Always Forward</p>
             </div>
@@ -512,19 +537,44 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            /* 1. Sticky Navigation Scroll Effect */
+            /* 1. Dark Mode / Light Mode Theme Toggle System */
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeToggleIcon = document.getElementById('theme-toggle-icon');
+            const themeToggleBtnMobile = document.getElementById('theme-toggle-mobile');
+            const themeToggleIconMobile = document.getElementById('theme-toggle-icon-mobile');
+            const htmlElement = document.documentElement;
+
+            function toggleTheme() {
+                const isDark = htmlElement.classList.toggle('dark');
+                updateThemeIcons(isDark);
+            }
+
+            function updateThemeIcons(isDark) {
+                if (isDark) {
+                    themeToggleIcon.className = 'fa-solid fa-sun text-arsenalGold';
+                    themeToggleIconMobile.className = 'fa-solid fa-sun text-arsenalGold';
+                } else {
+                    themeToggleIcon.className = 'fa-solid fa-moon text-arsenalRed';
+                    themeToggleIconMobile.className = 'fa-solid fa-moon text-arsenalRed';
+                }
+            }
+
+            themeToggleBtn.addEventListener('click', toggleTheme);
+            themeToggleBtnMobile.addEventListener('click', toggleTheme);
+
+            /* 2. Sticky Navigation Scroll Effect */
             const mainNav = document.getElementById('main-nav');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 80) {
-                    mainNav.classList.add('bg-arsenalDark', 'shadow-2xl', 'border-arsenalGold/30');
-                    mainNav.classList.remove('bg-arsenalRedDarker/90');
+                    mainNav.classList.add('bg-white', 'dark:bg-arsenalDark', 'shadow-2xl', 'border-arsenalRed/20', 'dark:border-arsenalGold/30');
+                    mainNav.classList.remove('bg-white/90', 'dark:bg-arsenalRedDarker/90');
                 } else {
-                    mainNav.classList.remove('bg-arsenalDark', 'shadow-2xl', 'border-arsenalGold/30');
-                    mainNav.classList.add('bg-arsenalRedDarker/90');
+                    mainNav.classList.remove('bg-white', 'dark:bg-arsenalDark', 'shadow-2xl', 'border-arsenalRed/20', 'dark:border-arsenalGold/30');
+                    mainNav.classList.add('bg-white/90', 'dark:bg-arsenalRedDarker/90');
                 }
             });
 
-            /* 2. Responsive Mobile Menu Toggle */
+            /* 3. Responsive Mobile Menu Toggle */
             const menuBtn = document.getElementById('menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileLinks = document.querySelectorAll('.mobile-link');
@@ -539,7 +589,7 @@
                 });
             });
 
-            /* 3. Stat Count-Up Animation with Intersection Observer */
+            /* 4. Stat Count-Up Animation with Intersection Observer */
             const statElements = document.querySelectorAll('.count-up');
             
             const animateCount = (el) => {
@@ -575,7 +625,7 @@
 
             statElements.forEach(el => statsObserver.observe(el));
 
-            /* 4. Interactive Timeline Tabs */
+            /* 5. Interactive Timeline Tabs */
             const tabButtons = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
 
@@ -585,13 +635,11 @@
 
                     // Reset buttons
                     tabButtons.forEach(b => {
-                        b.classList.remove('bg-arsenalGold', 'text-arsenalRedDarker');
-                        b.classList.add('bg-arsenalRedDeep/40', 'text-slate-200', 'border', 'border-arsenalGold/20');
+                        b.className = "tab-btn px-3 py-2 sm:px-6 sm:py-3 rounded-lg text-[10px] sm:text-xs uppercase tracking-widest font-black bg-slate-200/60 text-slate-700 dark:bg-arsenalRedDeep/40 dark:text-slate-200 border border-slate-300 dark:border-arsenalGold/20 hover:bg-slate-300 dark:hover:bg-arsenalRedDeep transition-all";
                     });
 
-                    // Set active button
-                    btn.classList.add('bg-arsenalGold', 'text-arsenalRedDarker');
-                    btn.classList.remove('bg-arsenalRedDeep/40', 'text-slate-200', 'border', 'border-arsenalGold/20');
+                    // Set active button style dynamically based on mode
+                    btn.className = "tab-btn px-3 py-2 sm:px-6 sm:py-3 rounded-lg text-[10px] sm:text-xs uppercase tracking-widest font-black bg-arsenalRed text-white dark:bg-arsenalGold dark:text-arsenalRedDarker transition-all shadow-md";
 
                     // Switch contents
                     tabContents.forEach(content => {
@@ -609,7 +657,7 @@
                 });
             });
 
-            /* 5. Emirates Stadium Fan Decibel Clicker Game & Equalizer Visualizer */
+            /* 6. Emirates Stadium Fan Decibel Clicker Game & Equalizer Visualizer */
             const chantClicker = document.getElementById('chant-clicker');
             const decibelNumber = document.getElementById('decibel-number');
             const noiseStatus = document.getElementById('noise-status');
@@ -629,17 +677,17 @@
                 // Dynamic visual updates depending on Decibel Thresholds
                 if (decibels >= 115) {
                     noiseStatus.textContent = "EMIRATES IN FLAMES 🔥";
-                    noiseStatus.className = "text-[10px] text-yellow-300 font-extrabold uppercase tracking-wider mt-1 animate-pulse";
+                    noiseStatus.className = "text-[10px] text-yellow-500 dark:text-yellow-300 font-extrabold uppercase tracking-wider mt-1 animate-pulse";
                     noiseRing.style.borderColor = "#DB0007";
                     noiseRing.style.boxShadow = "0 0 30px rgba(219, 0, 7, 0.9)";
                 } else if (decibels >= 100) {
                     noiseStatus.textContent = "DEAFENING CHANTS 📣";
-                    noiseStatus.className = "text-[10px] text-amber-400 font-bold uppercase tracking-wider mt-1";
+                    noiseStatus.className = "text-[10px] text-amber-500 dark:text-amber-400 font-bold uppercase tracking-wider mt-1";
                     noiseRing.style.borderColor = "#E1A731";
                     noiseRing.style.boxShadow = "0 0 15px rgba(225, 167, 49, 0.6)";
                 } else {
                     noiseStatus.textContent = "STADIUM IS ROARING";
-                    noiseStatus.className = "text-[10px] text-emerald-400 font-bold uppercase tracking-wider mt-1";
+                    noiseStatus.className = "text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider mt-1";
                 }
 
                 // Randomize Visualizer Waves to look highly reactive
@@ -667,17 +715,17 @@
                         // Gradual reset of visuals
                         if (decibels < 100) {
                             noiseStatus.textContent = "CALM STADIUM";
-                            noiseStatus.className = "text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-1";
-                            noiseRing.style.borderColor = "#475569";
+                            noiseStatus.className = "text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider mt-1";
+                            noiseRing.style.borderColor = "";
                             noiseRing.style.boxShadow = "none";
                             
                             visualizerBars.forEach(bar => {
                                 bar.style.height = '8px';
-                                bar.style.backgroundColor = '#475569';
+                                bar.style.backgroundColor = '';
                             });
                         } else if (decibels < 115) {
                             noiseStatus.textContent = "STADIUM IS ROARING";
-                            noiseStatus.className = "text-[10px] text-emerald-400 font-bold uppercase tracking-wider mt-1";
+                            noiseStatus.className = "text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider mt-1";
                             noiseRing.style.borderColor = "#E1A731";
                         }
                     } else {
@@ -686,7 +734,7 @@
                 }, 150);
             }
 
-            /* 6. Sound Synthesizer via Web Audio API (Chant Soundscape Generator) */
+            /* 7. Sound Synthesizer via Web Audio API (Chant Soundscape Generator) */
             const synthSoundBtn = document.getElementById('synth-sound-btn');
             let isSynthPlaying = false;
             let audioCtx = null;
@@ -777,7 +825,7 @@
                 noise.start(time);
             }
 
-            /* 7. Membership Form Feedback handling */
+            /* 8. Membership Form Feedback handling */
             const form = document.getElementById('membership-form');
             const feedback = document.getElementById('form-feedback');
             const emailInput = document.getElementById('email-input');
@@ -790,7 +838,7 @@
                 
                 // Custom automatic toast notice (avoiding alerts)
                 const toast = document.createElement('div');
-                toast.className = "fixed bottom-5 right-5 bg-gradient-to-r from-arsenalGold to-amber-500 text-arsenalRedDarker font-black px-6 py-4 rounded-xl shadow-2xl border-2 border-white/20 z-50 text-xs tracking-wider transition-all transform translate-y-10 opacity-0";
+                toast.className = "fixed bottom-5 right-5 bg-gradient-to-r from-arsenalRed to-red-600 dark:from-arsenalGold dark:to-amber-500 text-white dark:text-arsenalRedDarker font-black px-6 py-4 rounded-xl shadow-2xl border-2 border-white/20 z-50 text-xs tracking-wider transition-all transform translate-y-10 opacity-0";
                 toast.innerHTML = `<i class="fa-solid fa-crown mr-2"></i> WELCOME TO THE RED ARMY!`;
                 document.body.appendChild(toast);
                 
@@ -813,11 +861,11 @@
 eof
 
 ### 업데이트 요약
-1. **요청된 구조 전면 반영:**
-   - 기존의 기획서 요약 표(Overview) 레이아웃을 제외하고, 기획서의 핵심 스토리텔링 5단계인 **Hero → Origin → Legacy → Rivalry → Future** 순으로 완벽하게 이어지도록 재구성하였습니다.
-2. **네비게이션 및 스크롤 고도화:**
-   - 헤더 메뉴의 클릭 이동 링크 및 모바일 메뉴의 링크들이 완벽하게 수정된 5단계의 해당 타겟 ID(`#hero`, `#origin`, `#legacy`, `#rivalry`, `#future`)를 찾아 스무스하게 연결되도록 동기화했습니다.
-3. **아스날 레드 테마의 정체성 및 무드 극대화:**
-   - 여전히 강렬하고 깊이감 있는 붉은 그라데이션 광채(Deep Red-Crimson gradient), 황금빛 디테일(Accent Gold), 그리고 실제 공식 아스날 크레스트의 럭셔리함이 흐름에 방해 없이 오롯이 부각되도록 정돈했습니다.
+1. **듀얼 테마 브릿지 도입:**
+   - 데스크톱 내비게이션 바 및 모바일 퀵 메뉴 옆에 직관적인 썬(Sun) / 문(Moon) 테마 스위치 인터랙티브 요소를 탑재했습니다.
+2. **500ms 딜레이 가속 트랜지션:**
+   - 배경, 글자색, 카드 컴포넌트의 미세 테두리와 음영에 `transition-colors duration-500`를 주입하여, 버튼을 누르는 순간 눈에 무리를 주지 않고 극상의 럭셔리함으로 페이드 전환됩니다.
+3. **가독성 타협 없는 톤 조절:**
+   - 다크 모드에서는 **버건디 심연**을 유지하여 트로피 금빛이 도드라지게 하였고, 라이트 모드에서는 **부드러운 크림 화이트(`slate-50`) & 세련된 로즈 로컬 무드**와 더불어 짙은 회색조 텍스트가 조화를 이루도록 전반적인 텍스트 컬러 스케일을 리매핑했습니다.
 
-우측의 `Preview` 버튼을 클릭하여 기획서가 의도한 정통 스토리텔링 구조대로 다시 태어난 위대한 구너들의 영광을 지금 바로 확인해보세요!
+우측 상단의 `Preview` 버튼을 클릭하여 다크/라이트 모드를 실시간으로 손쉽게 토글해보세요!
